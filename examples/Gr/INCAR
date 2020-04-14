@@ -1,0 +1,25 @@
+SYSTEM = C:graphene
+ISTART = 0
+ISMEAR = 0
+SIGMA  = 0.01
+ENCUT = 800
+AMIN  = 0.01
+NSW   = 1
+EDIFF = 1E-8
+
+IBRION = -1
+SYMPREC = 0.0001 # the precision of poscar
+NPAR = 6 # need to change this when using different number of cores for optimal performance
+ADDGRID = .TRUE. # determines whether an additional support grid is used for the evaluation of the augmentation charge
+LREAL = .FALSE. 
+LWAVE = .FALSE. # write wave function
+ALGO = N
+NELMIN = 5
+PREC = Accurate
+
+# vdw
+#METAGGA = SCAN
+#LASPH = T
+#ADDGRID = T
+#LUSE_VDW = T
+#BPARAM = 15.7

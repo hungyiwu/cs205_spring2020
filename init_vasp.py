@@ -5,7 +5,7 @@ import shutil
 import subprocess
 
 def write_submit_job(job_name, job_folderpath, vasp_filepath,
-        n=6, t='0:01:00', p='shared,test', mem_per_cpu='4G'):
+        n=6, t='0-01:00', p='shared,test', mem_per_cpu='4G'):
     # format job text
     job_text = [
             '#!/bin/bash',

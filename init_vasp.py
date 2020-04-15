@@ -5,6 +5,10 @@ import shutil
 
 def write_submit_job(job_name, job_folderpath, vasp_filepath,
         job_filename='job.sbatch', n=6, t='0-01:00', p='shared,test', mem_per_cpu='4G'):
+    # convert to absolute paths
+    job_folderpath = os.path.abspath(job_folderpath)
+    vasp_filepath = os.path.abspath(vasp_filepath)
+
     # format job text
     job_text = [
             '#!/bin/bash',
@@ -13,10 +17,11 @@ def write_submit_job(job_name, job_folderpath, vasp_filepath,
             '#SBATCH -t {}'.format(t),
             '#SBATCH -p {}'.format(p),
             '#SBATCH --mem-per-cpu={}'.format(mem_per_cpu),
-            '#SBATCH -o job_%j.out',
-            '#SBATCH -e job_%j.err',
+            '#SBATCH -o {}_%j.out'.format(job_name),
+            '#SBATCH -e {}_%j.err'.format(job_name),
             '#SBATCH --account=cs205',
             'module load intel impi',
+            'cd {}'.format(job_folderpath),
             'mpirun -np {} {}'.format(n, vasp_filepath),
             ]
 
@@ -26,7 +31,7 @@ def write_submit_job(job_name, job_folderpath, vasp_filepath,
         outfile.writelines([line+'\n' for line in job_text])
 
     # return bash command for submission
-    return os.path.abspath(job_folderpath), job_filename
+    return job_filepath
 
 if __name__ == '__main__':
     # params
@@ -54,11 +59,10 @@ if __name__ == '__main__':
             shutil.copyfile(misc_filename, dst)
 
         # build vasp job script
-        job_folderpath, job_filename = write_submit_job(job_name=index,
+        job_filepath = write_submit_job(job_name=index,
                 job_folderpath=supcell_folderpath,
                 vasp_filepath=vasp_filepath)
-        job = 'jid{}=$(cd {} && sbatch {})'.format(len(job_queue),
-                job_folderpath, job_filename)
+        job = 'jid{}=$(sbatch {})'.format(len(job_queue), job_filepath)
         job_queue.append(job)
 
     # add post-processing job that depends on all previous jobs

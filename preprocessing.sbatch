@@ -9,13 +9,14 @@
 #SBATCH --account=cs205
 
 # paths and parameters
-UNITCELL_FILEPATH="./POSCAR_Gr"
-VASP_FILEPATH="vasp.std"
+UNITCELL_FILEPATH="$(pwd)/POSCAR_Gr"
+VASP_FILEPATH="$(pwd)/vasp.std"
 CONDAENV_NAME="cs205"
 DIM_X=2
 DIM_Y=3
 
 # load environment
+module load python hdf5
 source activate $CONDAENV_NAME
 
 # pre-processing

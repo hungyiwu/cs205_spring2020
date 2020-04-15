@@ -2,10 +2,9 @@ import os
 import sys
 import re
 import shutil
-import subprocess
 
 def write_submit_job(job_name, job_folderpath, vasp_filepath,
-        n=6, t='0-01:00', p='shared,test', mem_per_cpu='4G'):
+        job_filename='job.sbatch', n=6, t='0-01:00', p='shared,test', mem_per_cpu='4G'):
     # format job text
     job_text = [
             '#!/bin/bash',
@@ -22,25 +21,23 @@ def write_submit_job(job_name, job_folderpath, vasp_filepath,
             ]
 
     # write job script
-    job_filename = 'job.sbatch'
     job_filepath = os.path.join(job_folderpath, job_filename)
     with open(job_filepath, 'w') as outfile:
         outfile.writelines([line+'\n' for line in job_text])
 
-    # submit job from its folder
-    subprocess.call(['sbatch', job_filename], cwd=job_folderpath)
-
-    return
+    # return bash command for submission
+    return os.path.abspath(job_folderpath), job_filename
 
 if __name__ == '__main__':
     # params
-    vasp_filepath = sys.argv[1]
+    vasp_filepath, run_filepath = sys.argv[1], sys.argv[2]
     misc_filename_list = ['INCAR', 'POTCAR', 'KPOINTS']
 
     # find all supercell files
     supcell_filename_list = [n for n in os.listdir()\
             if re.fullmatch(pattern='POSCAR-\d{3}', string=n) is not None]
 
+    job_queue = []
     for supcell_filename in supcell_filename_list:
         # make folder
         index = supcell_filename.split('-')[1]
@@ -57,6 +54,18 @@ if __name__ == '__main__':
             shutil.copyfile(misc_filename, dst)
 
         # build vasp job script
-        write_submit_job(job_name=index,
+        job_folderpath, job_filename = write_submit_job(job_name=index,
                 job_folderpath=supcell_folderpath,
                 vasp_filepath=vasp_filepath)
+        job = 'jid{}=$(cd {} && sbatch {})'.format(len(job_queue),
+                job_folderpath, job_filename)
+        job_queue.append(job)
+
+    # add post-processing job that depends on all previous jobs
+    job = 'sbatch --dependency=afterok:' + ','.join(['$jid{}'.format(i)\
+            for i in range(len(job_queue))]) + 'postprocessing.sbatch'
+    job_queue.append(job)
+
+    # write execution bash script to disk
+    with open(run_filepath, 'w') as outfile:
+        outfile.writelines([line+'\n' for line in job_queue])

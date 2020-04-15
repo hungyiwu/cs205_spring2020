@@ -62,7 +62,7 @@ if __name__ == '__main__':
         job_queue.append(job)
 
     # add post-processing job that depends on all previous jobs
-    job = 'sbatch --dependency=afterok:' + ','.join(['$jid{}'.format(i)\
+    job = 'sbatch --dependency=afterok:' + ':'.join(['$jid{}'.format(i)\
             for i in range(len(job_queue))]) + 'postprocessing.sbatch'
     job_queue.append(job)
 

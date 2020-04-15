@@ -9,10 +9,7 @@
 #SBATCH --account=cs205
 
 # paths and parameters
-UNITCELL_FILEPATH="./POSCAR_Gr"
-BANDCONF_FILEPATH="./band.conf"
-MESHCONF_FILEPATH="./mesh.conf"
-CONDAENV_NAME="cs205"
+source params.conf
 
 # load modules
 module load python hdf5

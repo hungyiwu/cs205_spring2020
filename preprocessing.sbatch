@@ -9,11 +9,7 @@
 #SBATCH --account=cs205
 
 # paths and parameters
-UNITCELL_FILEPATH="$(pwd)/POSCAR_Gr"
-VASP_FILEPATH="$(pwd)/vasp.std"
-CONDAENV_NAME="cs205"
-DIM_X=2
-DIM_Y=3
+source params.conf
 
 # load environment
 module load python hdf5
@@ -22,5 +18,5 @@ source activate $CONDAENV_NAME
 # pre-processing
 phonopy --dim="$DIM_X $DIM_Y 1" -d -c $UNITCELL_FILEPATH
 
-# initiate vasp jobs
-python init_vasp.py $VASP_FILEPATH
+# initiate vasp jobs and write run script
+python init_vasp.py $VASP_FILEPATH $RUN_FILEPATH

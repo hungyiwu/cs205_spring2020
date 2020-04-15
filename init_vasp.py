@@ -62,12 +62,14 @@ if __name__ == '__main__':
         job_filepath = write_submit_job(job_name=index,
                 job_folderpath=supcell_folderpath,
                 vasp_filepath=vasp_filepath)
-        job = 'jid{}=$(sbatch {})'.format(len(job_queue), job_filepath)
+        job = 'jid{}=$(sbatch --parsable {})'.format(len(job_queue), job_filepath)
         job_queue.append(job)
 
     # add post-processing job that depends on all previous jobs
-    job = 'sbatch --dependency=afterok:' + ':'.join(['$jid{}'.format(i)\
-            for i in range(len(job_queue))]) + ' postprocessing.sbatch'
+    dependency = ':'.join(['$jid{}'.format(i) for i in range(len(job_queue))])
+    job = 'sbatch'\
+            + ' --dependency=afterok:{}'.format(dependency)\
+            + ' postprocessing.sbatch'
     job_queue.append(job)
 
     # write execution bash script to disk

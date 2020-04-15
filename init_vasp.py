@@ -63,7 +63,7 @@ if __name__ == '__main__':
 
     # add post-processing job that depends on all previous jobs
     job = 'sbatch --dependency=afterok:' + ':'.join(['$jid{}'.format(i)\
-            for i in range(len(job_queue))]) + 'postprocessing.sbatch'
+            for i in range(len(job_queue))]) + ' postprocessing.sbatch'
     job_queue.append(job)
 
     # write execution bash script to disk

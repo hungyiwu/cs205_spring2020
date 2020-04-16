@@ -10,3 +10,4 @@
   - run vasp z relaxation
 
 Note: if hetero, need to assume the lattice constants are the same
+Also need to go through the materials systematically

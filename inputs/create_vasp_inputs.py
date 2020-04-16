@@ -9,6 +9,7 @@ import pymatgen.io.vasp.inputs as inputs
 with open('config', 'r') as f:
     thelines = f.readlines()
     thelines = [x.strip() for x in thelines]
+    thelines = filter(lambda x: x != "", thelines)
     nlayers = len(thelines)/3.0
     if nlayers != np.floor(nlayers):
         print("Check your input file!")
@@ -33,6 +34,6 @@ with open('config', 'r') as f:
         try:
             poscar = struct.IStructure.from_file(filepath + fname)
             print(poscar.cart_coords)
-        catch:
+        except:
             print("Structure file does not exist!")
         

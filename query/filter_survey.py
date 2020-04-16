@@ -10,10 +10,6 @@ if __name__ == '__main__':
     survey_filepath = './survey_result.csv'
     output_filepath = './selected_survey_result.csv'
 
-    if os.path.isdir(dest_folderpath):
-        shutil.rmtree(dest_folderpath)
-    os.mkdir(dest_folderpath)
-
     # filter
     survey_df = pd.read_csv(survey_filepath)
     mask = (survey_df['count_unique_TM'] == 1)\
@@ -23,10 +19,17 @@ if __name__ == '__main__':
             & (survey_df['caxis'] > 15)
 
     # save selected table
-    survey_df.loc[mask].to_csv(output_filepath, index=False)
+    survey_df.loc[mask]\
+            .sort_values('consensus_formula')\
+            .to_csv(output_filepath, index=False)
 
 '''
-need to solve duplicating consensus formula issue
+    # need to solve duplicating consensus formula issue
+
+    if os.path.isdir(dest_folderpath):
+        shutil.rmtree(dest_folderpath)
+    os.mkdir(dest_folderpath)
+
     # copy POSCAR files
     for index in survey_df.index[mask]:
         src_filepath = os.path.join(poscar_folderpath,

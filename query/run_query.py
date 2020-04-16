@@ -3,33 +3,22 @@ import pandas as pd
 from pymatgen.ext import matproj
 from pymatgen.core import periodic_table
 
+import util
+
 if __name__ == '__main__':
     # path
     output_filepath = './query_result.csv'
 
-    # elements groups
-    transition_metal = []
-    chalcogen = []
-    others = []
-    for e in periodic_table.Element:
-        if e.group == 16:
-            chalcogen.append(e.symbol)
-        elif e.group >= 3 and e.group <= 12:
-            transition_metal.append(e.symbol)
-        else:
-            others.append(e.symbol)
-
-    # only consider a few chalcogens
-    chalcogen = ['S', 'Se', 'Te']
+    elementgroup_dict = util.element_of_interest()
 
     # open restful interface
     with matproj.MPRester(api_key='9bASScRXuQNDSebS') as m:
         # build criteria
         criteria = {
                 'elements':{
-                    '$in': transition_metal,
-                    '$in': chalcogen,
-                    '$nin': others,
+                    '$in': elementgroup_dict['transition_metal'],
+                    '$in': elementgroup_dict['chalcogen'],
+                    '$nin': elementgroup_dict['others'],
                     },
                 'nelements':{'$in': [2, 3]},
                 }

@@ -1,0 +1,12 @@
+1. a config file. Inputs:
+  - materials
+  - N layer
+  - alignment
+  - hetero / homo? 
+2. script to: 
+  - reads the config file
+  - load poscar
+  - creates vasp input files
+  - run vasp z relaxation
+
+Note: if hetero, need to assume the lattice constants are the same

@@ -1,8 +1,8 @@
 # Create VASP inputs files and combine monolayer TMDCs
 
-Edit ` ``config`` ` file as needed 
+Edit `config` file as needed 
 
-#### Default  ` ``config`` ` file format: 
+#### Default  `config` file format: 
 Each layer has four lines. 
 
 Line 1: elements (order: metal, chalcogen)

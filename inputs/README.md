@@ -1,9 +1,10 @@
 # Create VASP inputs files and combine monolayer TMDCs
 
-1. Edit ` ``config`` ` file as needed 
+Edit ` ``config`` ` file as needed 
 
 #### Default  ` ``config`` ` file format: 
-Each layer has three lines. 
+Each layer has four lines. 
+
 Line 1: elements (order: metal, chalcogen)
 
 Line 2: number of atoms corresponding to the element above 
@@ -14,11 +15,13 @@ Line 4: Layer separation between this layer and the last layer. The separation i
 
 
 To construct the structure, do
+
 `import vasp_cofig as vc`
 
 `v = vc.Vasp_Config()` 
 
 To write `POSCAR` and `POTCAR`, do 
+
 `vc.POSCAR_writer()`
 
 `vc.POTCAR_writer()`

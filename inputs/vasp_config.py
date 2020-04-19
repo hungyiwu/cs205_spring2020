@@ -101,7 +101,7 @@ class Vasp_Config(object):
 #                except:
 #                    print("Structure file does not exist!")
     
-    def POSCAR_writer(self,fname="POSCAR"):
+    def POSCAR_writer(self,fname="/POSCAR"):
         vac = 15 # vacuum spacing
         c = vac + np.sum(self.dz) + np.sum(self.zsep)
         a0 = np.mean(self.a0) # let the combined lattice constant be the averaged value
@@ -141,28 +141,34 @@ class Vasp_Config(object):
         out.selective_dynamics=relax
         out.write_file(os.getcwd()+fname)
         
+        
     
     def POTCAR_writer(self):
-
+    
+        with open("./POSCAR", 'r') as f:
+            thelines = f.readlines()
+            print(thelines)
+            mat = thelines[5][:-1]
+        mat = mat.split(" ")
+        
         # Create POTCAR
         catstring = 'cat '
-        cwd = os.getcwd()
-        
-#        # find the list of non-repeating elements
-#        previous = None
-#        mat = ""
-#        for x in mat_all:
-#            if x != previous:
-#                mat = mat + x + "\t"
-#            previous = x
-#        mat = np.sort(mat.split("\t"))
-#        #print(mat)
-        
-        
-        for name in self.mat:
+        print(mat)
+##        # find the list of non-repeating elements
+##        previous = None
+##        mat = ""
+##        for x in mat_all:
+##            if x != previous:
+##                mat = mat + x + "\t"
+##            previous = x
+##        mat = np.sort(mat.split("\t"))
+##        #print(mat)
+#
+
+        for name in mat:
             if name != "":
                 catstring+= os.getcwd() + '/PPs/' + name + '_POTCAR '
-        
+
         # print(catstring)
 
         catstring += "> POTCAR"

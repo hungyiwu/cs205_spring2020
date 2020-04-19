@@ -20,8 +20,16 @@ To construct the structure, do
 
 `v = vc.Vasp_Config()` 
 
-To write `POSCAR` and `POTCAR`, do 
+To write `POSCAR`, `POTCAR`, `KPOINTS`, and `INCAR` do 
 
 `vc.POSCAR_writer()`
 
 `vc.POTCAR_writer()`
+
+`vc.KPOINTS_writer()`
+
+`vc.KPOINTS_writer(v.params)`
+
+Use and `params.config` from the phonopy pipeline to run vasp
+
+

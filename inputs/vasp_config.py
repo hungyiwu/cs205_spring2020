@@ -5,7 +5,6 @@ import os
 import numpy as np
 from math import *
 import re
-
 import pymatgen.core.structure as struct
 import pymatgen.io.vasp.inputs as inputs
 
@@ -20,7 +19,7 @@ class Vasp_Config(object):
         self.mat = np.array([]) # list of elements
         self.nlayers = 1
         self.dz = [] # list of interlayer separations
-        
+
         # default INCAR parameters for relaxation
         self.params = {
         "SYSTEM":"TMDC",

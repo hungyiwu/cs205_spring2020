@@ -30,7 +30,7 @@ class Vasp_Config(object):
         "AMIN":0.01,
         "NSW":100, # change to 1 when calculating the force field
         "EDIFF":1E-8,
-        "IBRION":-1,
+        "IBRION":2,
         "SYMPREC":0.0001, # the precision of poscar
         "NPAR":1,
         "ADDGRID":".TRUE.", # determines whether an additional support grid is used for the evaluation of the augmentation charge

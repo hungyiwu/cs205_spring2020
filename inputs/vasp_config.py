@@ -134,7 +134,7 @@ class Vasp_Config(object):
         # relax the atomic positions in the z direction
         relax = [[False, False, True] for x in range(self.nlayers*3)]
         relax[0][2]=False
-        print(relax)
+        #print(relax)
                 
         layers = struct.Structure(A0,self.mat,coords,coords_are_cartesian=False)
         out = inputs.Poscar(layers)
@@ -148,7 +148,7 @@ class Vasp_Config(object):
         catstring = 'cat '
         cwd = os.getcwd()
         mat_all = np.sort(self.mat)
-        print(mat_all)
+        #print(mat_all)
         
         # find the list of non-repeating elements
         previous = None
@@ -158,7 +158,7 @@ class Vasp_Config(object):
                 mat = mat + x + "\t"
             previous = x
         mat = np.sort(mat.split("\t"))
-        print(mat)
+        #print(mat)
         
         
         for name in mat:
@@ -183,8 +183,8 @@ class Vasp_Config(object):
         kpt = inputs.Kpoints(comment='k grid', kpts=nk, kpts_shift=(0,0,0))
         kpt.write_file(os.getcwd()+fname)
 
-    def vasp_run(self, vaspdir = "./"):
-        os.system('mpirun -np $SLURM_NTASKS ' + vaspdir + 'vasp.std')
+    def vasp_run(self, vaspdir = "./vasp.std"):
+        os.system('mpirun -np $SLURM_NTASKS ' + vaspdir )
 
 if __name__ == '__main__':
     pass

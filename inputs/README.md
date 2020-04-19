@@ -2,6 +2,11 @@
 
 Edit `config` file as needed 
 
+### General Workflow
+1. Combine different layers using the input in `config` and create VASP input files
+2. Run VASP calculation that allows ions to move in the z-direction to find optimal interlayer separations
+3. Copy the relaxed structure to `POSCAR-unit`, rewrite `INCAR-ff` for the force field calculation (same setting except for letting `NSW=1` for no ionic relaxation)
+
 #### Default  `config` file format: 
 Each layer has four lines. 
 
@@ -30,6 +35,8 @@ To write `POSCAR`, `POTCAR`, `KPOINTS`, and `INCAR` do
 
 `vc.KPOINTS_writer(v.params)`
 
-Use and `params.config` from the phonopy pipeline to run vasp
+Use and `params.config` from the phonopy pipeline to run initialize filepath, conda environment etc.
 
+After the structure construction, perform a VASP calculation to allow out-of-plane relaxation.
 
+After the relaxation calculation is finished, copy the relaxed structure in CONTCAR to POSCAR-unit.

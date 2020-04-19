@@ -147,21 +147,19 @@ class Vasp_Config(object):
         # Create POTCAR
         catstring = 'cat '
         cwd = os.getcwd()
-        mat_all = np.sort(self.mat)
-        #print(mat_all)
         
-        # find the list of non-repeating elements
-        previous = None
-        mat = ""
-        for x in mat_all:
-            if x != previous:
-                mat = mat + x + "\t"
-            previous = x
-        mat = np.sort(mat.split("\t"))
-        #print(mat)
+#        # find the list of non-repeating elements
+#        previous = None
+#        mat = ""
+#        for x in mat_all:
+#            if x != previous:
+#                mat = mat + x + "\t"
+#            previous = x
+#        mat = np.sort(mat.split("\t"))
+#        #print(mat)
         
         
-        for name in mat:
+        for name in self.mat:
             if name != "":
                 catstring+= os.getcwd() + '/PPs/' + name + '_POTCAR '
         
@@ -184,7 +182,7 @@ class Vasp_Config(object):
         kpt.write_file(os.getcwd()+fname)
 
     def vasp_run(self, vaspdir = "./vasp.std"):
-        os.system('mpirun -np $SLURM_NTASKS ' + vaspdir )
+        os.system('mpirun -n $SLURM_NTASKS ' + vaspdir )
 
 if __name__ == '__main__':
     pass

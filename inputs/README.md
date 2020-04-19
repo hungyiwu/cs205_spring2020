@@ -1,13 +1,13 @@
 # Create VASP inputs files and combine monolayer TMDCs
 
-Edit `config` file as needed 
-
 To run the work flow, do `sbatch bat`
 
 ### General Workflow
 1. Combine different layers using the input in `config` and create VASP input files
 2. Run VASP calculation that allows ions to move in the z-direction to find optimal interlayer separations
 3. Copy the relaxed structure to `POSCAR-unit`, rewrite `INCAR-ff` for the force field calculation (same setting except for letting `NSW=1` for no ionic relaxation)
+
+Edit `config` file as needed 
 
 #### Default  `config` file format: 
 Each layer has four lines. 
@@ -42,3 +42,6 @@ Use and `params.config` from the phonopy pipeline to run initialize filepath, co
 After the structure construction, perform a VASP calculation to allow out-of-plane relaxation.
 
 After the relaxation calculation is finished, copy the relaxed structure in CONTCAR to POSCAR-unit.
+
+
+### Note: need to adjust parameter `NPAR` or `NCORE` in `INCAR` depending on the number of cores used 

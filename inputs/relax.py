@@ -1,5 +1,5 @@
 import vasp_config as vc 
-
+import sys
 v = vc.Vasp_Config()
 v.POSCAR_writer()
 v.POTCAR_writer()

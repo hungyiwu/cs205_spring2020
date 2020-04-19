@@ -147,24 +147,13 @@ class Vasp_Config(object):
     
         with open("./POSCAR", 'r') as f:
             thelines = f.readlines()
-            print(thelines)
             mat = thelines[5][:-1]
         mat = mat.split(" ")
         
         # Create POTCAR
         catstring = 'cat '
         print(mat)
-##        # find the list of non-repeating elements
-##        previous = None
-##        mat = ""
-##        for x in mat_all:
-##            if x != previous:
-##                mat = mat + x + "\t"
-##            previous = x
-##        mat = np.sort(mat.split("\t"))
-##        #print(mat)
-#
-
+        
         for name in mat:
             if name != "":
                 catstring+= os.getcwd() + '/PPs/' + name + '_POTCAR '
@@ -189,6 +178,13 @@ class Vasp_Config(object):
 
     def vasp_run(self, vaspdir = "./vasp.std"):
         os.system('mpirun -n $SLURM_NTASKS ' + vaspdir )
+        
+    def relax_off(self,fname="./POSCAR-unit"): # turn off selective dynamics
+        relax_struct=struct.Structure.from_file(fname)
+        print(relax_struct.coords)
+        relax_poscar=inputs.Poscar(relax_struct,selective_dynamics=None)
+        relax = [[False, False, False] for x in range(self.nlayers*3)]
+        relax_poscar.write_file(fname)
 
 if __name__ == '__main__':
     pass

@@ -1,10 +1,11 @@
 import vasp_config as vc 
-import sys 
+import os 
 
 v = vc.Vasp_Config()
 incar_params = v.params
-incar_params.params["NSW"]=1
+incar_params["NSW"]=1
 
-v.INCAR_writer(incar_params,fname='INCAR-ff')
+v.INCAR_writer(incar_params,fname='/INCAR-ff')
 
-os.sys("mv CONTCAR POSCAR-unit")
+os.system("cp CONTCAR POSCAR-unit")
+v.relax_off() # turn off selective dynamics

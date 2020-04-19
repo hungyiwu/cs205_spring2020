@@ -2,6 +2,8 @@
 
 Edit `config` file as needed 
 
+To run the work flow, do `sbatch bat`
+
 ### General Workflow
 1. Combine different layers using the input in `config` and create VASP input files
 2. Run VASP calculation that allows ions to move in the z-direction to find optimal interlayer separations

@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=gr
+#SBATCH --job-name=relax
 #SBATCH -n 36 # Number of cores requested
 #SBATCH -t 8:00:00 # Runtime in minutes
 #SBATCH -p shared,test # Partition to submit to
@@ -10,11 +10,11 @@
 
 module load intel/17.0.4-fasrc01 
 module load impi/2017.2.174-fasrc01
+module load python hdf5
+source activate $CONDAENV_NAME
 
 module list
 
 source params.config
 python relax.py $VASP_FILEPATH
 
-sleep 5
-cp CONTCAR POSCAR-unit

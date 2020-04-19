@@ -21,11 +21,39 @@ class Vasp_Config(object):
         self.nlayers = 1
         self.dz = [] # list of interlayer separations
         
+        # default INCAR parameters for relaxation
+        self.params = {
+        "SYSTEM":"TMDC",
+        "ISTART":0,
+        "ISMEAR":0,
+        "SIGMA":0.01,
+        "ENCUT":800,
+        "AMIN":0.01,
+        "NSW":100, # change to 1 when calculating the force field
+        "EDIFF":1E-8,
+        "IBRION":-1,
+        "SYMPREC":0.0001, # the precision of poscar
+        "NPAR":1,
+        "ADDGRID":".TRUE.", # determines whether an additional support grid is used for the evaluation of the augmentation charge
+        "LREAL":".FALSE.",
+        "LWAVE":".FALSE.", # write wave function
+        "ALGO":"N",
+        "NELMIN":5,
+        "PREC":"Accurate",
+
+        # vdw correction
+        "METAGGA":"SCAN",
+        "LASPH":"T",
+        "LUSE_VDW":"T",
+        "BPARAM":"15.7"
+        }
+        
         # read info from config
         with open(target, 'r') as f:
             thelines = f.readlines()
             thelines = [x.strip() for x in thelines]
-            thelines = filter(lambda x: x != "", thelines)
+            thelines = filter(lambda x: x != "", thelines)  # in py3, this is an object
+            thelines = [x for x in thelines]
             nlayers = len(thelines)/4.0
             self.nlayers = int(nlayers)
             if nlayers != np.floor(nlayers):
@@ -60,19 +88,19 @@ class Vasp_Config(object):
                     for m in range(int(num[n])):
                         self.mat = np.append(self.mat,mat[n])
 
-                try:
-                    poscar = struct.IStructure.from_file(filepath + fname)
-                    self.a0[l] = poscar.lattice.abc[0]
-                    z_pos = np.zeros([3,1])
-                    for a_idx in range(3): # assuming there are 3 atoms
-                        z_pos[a_idx] = poscar.cart_coords[a_idx][2]
-                        if z_pos[a_idx] > 0.5*poscar.lattice.c:
-                            z_pos[a_idx] = z_pos[a_idx]-poscar.lattice.c
-                            
-                    self.zsep[l] = (np.max(z_pos) - np.min(z_pos))/2
+                #try:
+                poscar = struct.IStructure.from_file(filepath + fname)
+                self.a0[l] = poscar.lattice.abc[0]
+                z_pos = np.zeros([3,1])
+                for a_idx in range(3): # assuming there are 3 atoms
+                    z_pos[a_idx] = poscar.cart_coords[a_idx][2]
+                    if z_pos[a_idx] > 0.5*poscar.lattice.c:
+                        z_pos[a_idx] = z_pos[a_idx]-poscar.lattice.c
+                        
+                self.zsep[l] = (np.max(z_pos) - np.min(z_pos))/2
                
-                except:
-                    print("Structure file does not exist!")
+#                except:
+#                    print("Structure file does not exist!")
     
     def POSCAR_writer(self):
         vac = 15 # vacuum spacing
@@ -82,6 +110,7 @@ class Vasp_Config(object):
             [-0.5*a0, sqrt(3)/2*a0, 0],
             [0, 0, c]]
         
+        # create atomic positions for all layers in Cartesian coordinate
         coords = np.zeros([self.nlayers*3,3])
         z_here = 0
         for l in range(self.nlayers):
@@ -102,9 +131,15 @@ class Vasp_Config(object):
             coords[l*3:(l+1)*3][:] = coords_here
             coords[l*3:(l+1)*3,2] += z_here
             coords[l*3:(l+1)*3,2] = coords[l*3:(l+1)*3,2] / c
+        
+        # relax the atomic positions in the z direction
+        relax = [[False, False, True] for x in range(self.nlayers*3)]
+        relax[0][2]=False
+        print(relax)
                 
         layers = struct.Structure(A0,self.mat,coords,coords_are_cartesian=False)
         out = inputs.Poscar(layers)
+        out.selective_dynamics=relax
         out.write_file(os.getcwd()+"/POSCAR")
         
     
@@ -140,14 +175,17 @@ class Vasp_Config(object):
         except:
             print('POTCAR not found!')
 
-#    def INCAR_writer(self):
-#
-#
-#    def KPOINT_writer(self):
-#
+    def INCAR_writer(self,params):
+        incar = inputs.Incar(params)
+        incar.write_file(os.getcwd()+"/INCAR")
+
+    def KPOINT_writer(self):
+        nk = [[13, 13, 1]]
+        kpt = inputs.Kpoints(comment='k grid', kpts=nk, kpts_shift=(0,0,0))
+        kpt.write_file(os.getcwd()+"/KPOINTS")
 
     def vasp_run(self, vaspdir = "./"):
         os.system('mpirun -np $SLURM_NTASKS ' + vaspdir + 'vasp.std')
 
 if __name__ == '__main__':
-    Vasp_Config()
+    pass

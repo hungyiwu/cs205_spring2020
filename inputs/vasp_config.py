@@ -101,7 +101,7 @@ class Vasp_Config(object):
 #                except:
 #                    print("Structure file does not exist!")
     
-    def POSCAR_writer(self):
+    def POSCAR_writer(self,fname="POSCAR"):
         vac = 15 # vacuum spacing
         c = vac + np.sum(self.dz) + np.sum(self.zsep)
         a0 = np.mean(self.a0) # let the combined lattice constant be the averaged value
@@ -139,7 +139,7 @@ class Vasp_Config(object):
         layers = struct.Structure(A0,self.mat,coords,coords_are_cartesian=False)
         out = inputs.Poscar(layers)
         out.selective_dynamics=relax
-        out.write_file(os.getcwd()+"/POSCAR")
+        out.write_file(os.getcwd()+fname)
         
     
     def POTCAR_writer(self):
@@ -174,14 +174,14 @@ class Vasp_Config(object):
         except:
             print('POTCAR not found!')
 
-    def INCAR_writer(self,params):
+    def INCAR_writer(self,params,fname="/INCAR"):
         incar = inputs.Incar(params)
-        incar.write_file(os.getcwd()+"/INCAR")
+        incar.write_file(os.getcwd()+fname)
 
-    def KPOINT_writer(self):
+    def KPOINT_writer(self,fname="/KPOINTS"):
         nk = [[13, 13, 1]]
         kpt = inputs.Kpoints(comment='k grid', kpts=nk, kpts_shift=(0,0,0))
-        kpt.write_file(os.getcwd()+"/KPOINTS")
+        kpt.write_file(os.getcwd()+fname)
 
     def vasp_run(self, vaspdir = "./"):
         os.system('mpirun -np $SLURM_NTASKS ' + vaspdir + 'vasp.std')

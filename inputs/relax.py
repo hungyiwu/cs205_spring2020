@@ -7,5 +7,5 @@ v.KPOINT_writer()
 v.INCAR_writer(v.params)
 
 vasp_filepath = sys.argv[1]
-vasp_run(vasp_dir=vasp_filepath)
+v.vasp_run(vasp_dir=vasp_filepath)
 

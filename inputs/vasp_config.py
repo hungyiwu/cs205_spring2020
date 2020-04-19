@@ -130,6 +130,9 @@ class Vasp_Config(object):
             coords[l*3:(l+1)*3][:] = coords_here
             coords[l*3:(l+1)*3,2] += z_here
             coords[l*3:(l+1)*3,2] = coords[l*3:(l+1)*3,2] / c
+            for i in range(3):
+                if coords[l*3+i,2] < 0:
+                    coords[l*3+i,2] += 1
         
         # relax the atomic positions in the z direction
         relax = [[False, False, True] for x in range(self.nlayers*3)]

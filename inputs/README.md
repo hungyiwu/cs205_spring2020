@@ -3,6 +3,7 @@
 To run the work flow, do `sbatch bat`
 
 ### General Workflow
+0. Create different config files using the MultilayerSet class in multilayer_config_generator.py
 1. Combine different layers using the input in `config` and create VASP input files
 2. Run VASP calculation that allows ions to move in the z-direction to find optimal interlayer separations
 3. Copy the relaxed structure to `POSCAR-unit`, rewrite `INCAR-ff` for the force field calculation (same setting except for letting `NSW=1` for no ionic relaxation)
@@ -20,6 +21,7 @@ Line 3: layer alignment with respect to the positive x axis (0 degree or 180 deg
 
 Line 4: Layer separation between this layer and the last layer. The separation is defined as the distance between the chalcogen atom of the layer ($\ell$-1) to the metal atom of the layer $\ell$
 
+To construct config files, use the multilayer_config_generator.py file. Read class variables for specifics. See quickrunner.py for example run which combines TMDC_poscar monolayers into the multilayer permutations with repetition of up to 3 stacks in multilayer_TMDC_poscar.
 
 To construct the structure, do
 
@@ -43,5 +45,4 @@ After the structure construction, perform a VASP calculation to allow out-of-pla
 
 After the relaxation calculation is finished, copy the relaxed structure in CONTCAR to POSCAR-unit.
 
-
-### Note: need to adjust parameter `NPAR` or `NCORE` in `INCAR` depending on the number of cores used 
+### Note: need to adjust parameter `NPAR` or `NCORE` in `INCAR` depending on the number of cores used

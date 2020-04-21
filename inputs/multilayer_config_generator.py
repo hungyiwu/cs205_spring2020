@@ -26,7 +26,7 @@ class MultilayerSet(object):
         else:
             self.alignments = np.array(alignments)
         if verticals is None:
-            self.verticals = np.array([5, 5, 5, 5, 5]) #default 5 unit vertical
+            self.verticals = np.array([6.24, 6.24, 6.24, 6.24, 6.24]) #default 5 unit vertical
         else:
             self.verticals = np.array(verticals)
 

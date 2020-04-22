@@ -5,6 +5,7 @@ import os
 import numpy as np
 from math import *
 import re
+import pymatgen
 import pymatgen.core.structure as struct
 import pymatgen.io.vasp.inputs as inputs
 

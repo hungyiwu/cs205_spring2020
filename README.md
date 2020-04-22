@@ -8,7 +8,11 @@ Ab initio phonon calculation 2D material.
 
    Get the list of stable 2D material from the Materials Cloud, lattice constants (in downloaded POSCAR files) from the Materials Project.
    
-2. Determine optimal spacing for mono-layer unit cells
+2. Combine mono-layer unit cells to multi-layer unit-cells
+
+   Combinatorial, with different orientations.
+   
+3. Determine optimal spacing for mono-layer unit cells
 
 ```
 # Python-flavored pseudo-code
@@ -28,10 +32,6 @@ def generate_unitcell_POSCAR(formula, lattice_constant, template_POSCAR_file):
     
     return unitcell_POSCAR_file
 ```
-
-3. Combine mono-layer unit cells to multi-layer unit-cells
-
-   Combinatorial, with different orientations.
    
 4. Pre-processing using `phonopy`
 

@@ -32,7 +32,6 @@ class Vasp_Config(object):
         "EDIFF":1E-8,
         "IBRION":2,
         "SYMPREC":0.0001, # the precision of poscar
-        "NPAR":1,
         "ADDGRID":".TRUE.", # determines whether an additional support grid is used for the evaluation of the augmentation charge
         "LREAL":".FALSE.",
         "LWAVE":".FALSE.", # write wave function
@@ -108,11 +107,15 @@ class Vasp_Config(object):
         A0 = [[1*a0, 0, 0],
             [-0.5*a0, sqrt(3)/2*a0, 0],
             [0, 0, c]]
+            
+        # relax the atomic positions in the z direction
+        relax = [[False, False, True] for x in range(self.nlayers*3)]
         
         # create atomic positions for all layers in Cartesian coordinate
         coords = np.zeros([self.nlayers*3,3])
         z_here = 0
         for l in range(self.nlayers):
+            relax[l*3][2]=False
             z_here = z_here + self.dz[l]
             if l > 0:
                 z_here = z_here + self.zsep[l]
@@ -134,9 +137,10 @@ class Vasp_Config(object):
                 if coords[l*3+i,2] < 0:
                     coords[l*3+i,2] += 1
         
-        # relax the atomic positions in the z direction
-        relax = [[False, False, True] for x in range(self.nlayers*3)]
-        relax[0][2]=False
+        # For 0 deg. stacking, the AB stacking is the stable stacking config.
+        # Need to shift by (1/3,1/3,0) for every
+        # for l in range(self.nlayers):
+            
         #print(relax)
                 
         layers = struct.Structure(A0,self.mat,coords,coords_are_cartesian=False)
@@ -144,8 +148,12 @@ class Vasp_Config(object):
         out.selective_dynamics=relax
         out.write_file(os.getcwd()+fname)
         
+    # shift the atomic position with index n
+    # input: 
+    def shift_position(self, struct, dx, dy, dz, n):
         
     
+
     def POTCAR_writer(self):
     
         with open("./POSCAR", 'r') as f:
@@ -184,7 +192,6 @@ class Vasp_Config(object):
         
     def relax_off(self,fname="./POSCAR-unit"): # turn off selective dynamics
         relax_struct=struct.Structure.from_file(fname)
-        print(relax_struct.coords)
         relax_poscar=inputs.Poscar(relax_struct,selective_dynamics=None)
         relax = [[False, False, False] for x in range(self.nlayers*3)]
         relax_poscar.write_file(fname)

@@ -186,8 +186,8 @@ class Vasp_Config(object):
         kpt = inputs.Kpoints(comment='k grid', kpts=nk, kpts_shift=(0,0,0))
         kpt.write_file(os.getcwd()+fname)
 
-    def vasp_run(self, vaspdir = "./vasp.std"):
-        os.system('mpirun -n $SLURM_NTASKS ' + vaspdir )
+    def vasp_run(self, vaspdir = "./vasp.std", np='$SLURM_NTASKS'):
+        os.system('mpirun -n ' + np + ' ' + vaspdir )
         
     def relax_off(self,fname="./POSCAR-unit"): # turn off selective dynamics
         relax_struct=struct.Structure.from_file(fname)

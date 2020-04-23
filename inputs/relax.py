@@ -2,6 +2,7 @@ import vasp_config as vc
 import multilayer_config_generator as mcg
 import sys
 import os
+import re
 from shutil import copyfile
 
 vasp_dir = "/vasp_relax_test/" # master directory to run vasp
@@ -30,11 +31,11 @@ for dz in range(10):
         v.KPOINT_writer(subdir+"/KPOINTS")
         params = v.params
         params["ISIF"]=3
-        params["NPAR"]=6
+        params["NPAR"]=2
         params["NSW"]=1
         v.INCAR_writer(v.params,subdir + "/INCAR")
-        #os.system("cd ..")
-
-#        vasp_filepath = sys.argv[1]
-#        v.vasp_run(vaspdir=vasp_filepath)
+        
+        if re.match(f, "MoPd_TeTe_alignments__0_0_verticals"):
+            vasp_filepath = sys.argv[1]
+            v.vasp_run(vaspdir=vasp_filepath,np="4")
 

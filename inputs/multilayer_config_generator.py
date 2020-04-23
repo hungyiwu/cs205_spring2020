@@ -18,7 +18,7 @@ class MultilayerSet(object):
         else:
             self.monolayer_directory = monolayer_directory
         if multilayer_directory is None:
-            self.multilayer_directory = "./multilayer_TMDC_poscar/" #default multilayer directory
+            self.multilayer_directory = "./multilayer_TMDC_config/" #default multilayer directory
         else:
             self.multilayer_directory = multilayer_directory
         if alignments is None:
@@ -47,6 +47,7 @@ class MultilayerSet(object):
 
     def config_writer(self):
         #make configuration file for each stack size and permutation with repititions
+        self.fname = []
         os.makedirs(self.multilayer_directory, exist_ok=True)
         for number in self.layer_number:
             stacks = list(it.product(range(self.poscar_number), repeat=number))
@@ -55,7 +56,9 @@ class MultilayerSet(object):
                 temp_chalcogen = self.chalcogen[list(stack)]
                 filename = "config_" + ''.join(temp_transition_metal) + "_" + ''.join(temp_chalcogen) + "_alignments__" + np.array2string(self.alignments[0:number], separator="_")[1:-1].replace(" ","") + "_verticals__" + np.array2string(self.verticals[0:number], separator="_")[1:-1].replace(" ", "")
                 f = open(self.multilayer_directory+filename, "w")
+                self.fname.append(filename)
                 for iii in range(number):
                     f.write(temp_transition_metal[iii] + " " + temp_chalcogen[iii] + "\n1 2\n")
                     f.write(str(self.alignments[iii]) + "\n" + str(self.verticals[iii]) + "\n\n")
                 f.close()
+      

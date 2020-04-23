@@ -98,9 +98,6 @@ class Vasp_Config(object):
                         
                 self.zsep[l] = (np.max(z_pos) - np.min(z_pos))/2
                
-#                except:
-#                    print("Structure file does not exist!")
-    
     def POSCAR_writer(self,fname="/POSCAR"):
         vac = 15 # vacuum spacing
         c = vac + np.sum(self.dz) + np.sum(self.zsep)
@@ -121,12 +118,12 @@ class Vasp_Config(object):
             if l > 0:
                 z_here = z_here + self.zsep[l]
                 
-            if self.alignment[l] == 0:
+            if self.alignment[l] == 0: # 0 deg.
                 coords_here = np.array([[0, 0, 0],
                     [1./3, 2./3, -self.zsep[l]],
                     [1./3, 2./3, self.zsep[l]]])
                 
-            else:
+            else: # 180 deg.
                 coords_here = [[1./3, 2./3, 0],
                     [0, 0, -self.zsep[l]],
                     [0, 0, self.zsep[l]]]
@@ -140,10 +137,11 @@ class Vasp_Config(object):
         
         # For 0 deg. stacking, the AB stacking is the stable stacking config.
         # Need to shift by (1/3,1/3,0) for every
-        # for l in range(self.nlayers):
+        for l in range(self.nlayers):
+            if self.alignment[l] == 0:
+                coords[l*3:,0] += 1./3
+                coords[l*3:,1] -= 1./3
             
-        #print(relax)
-                
         layers = struct.Structure(A0,self.mat,coords,coords_are_cartesian=False)
         out = inputs.Poscar(layers)
         out.selective_dynamics=relax
@@ -152,12 +150,12 @@ class Vasp_Config(object):
     # shift the atomic position with index n
     # input: 
     def shift_position(self, struct, dx, dy, dz, n):
-        
+        pass
     
 
-    def POTCAR_writer(self):
+    def POTCAR_writer(self,fname,poscar_dir="./POSCAR"):
     
-        with open("./POSCAR", 'r') as f:
+        with open(os.getcwd()+poscar_dir, 'r') as f:
             thelines = f.readlines()
             mat = thelines[5][:-1]
         mat = mat.split(" ")
@@ -172,7 +170,7 @@ class Vasp_Config(object):
 
         # print(catstring)
 
-        catstring += "> POTCAR"
+        catstring += "> " + os.getcwd()+fname
 
         try:
             os.system(catstring)

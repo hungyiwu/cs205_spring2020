@@ -18,12 +18,4 @@ if __name__ == '__main__':
     df_2d = pd.DataFrame.from_records(record)\
             .sort_values(['formula', 'space_group'])
 
-    # load POSCAR list
-    df_poscar = pd.read_csv(poscar_filepath)
-
-    # merge
-    df = df_2d.merge(df_poscar, left_on=['formula', 'space_group'],
-            right_on=['pretty_formula', 'space_group'], how='inner')
-
-    print(df.shape)
-    print(df.head())
+    df_2d.to_csv('2D_material_list.csv', index=False)

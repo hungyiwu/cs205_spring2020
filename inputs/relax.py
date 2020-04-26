@@ -11,7 +11,7 @@ vasp_dir = "/vasp_relax_test/" # master directory to run vasp
 # generate input files for 10 different layer separations
 for dz in range(20):
     # create config file
-    set = mcg.MultilayerSet(layer_number=[2], alignments=[0,180], verticals=[0,4.5+0.05*dz])
+    set = mcg.MultilayerSet(layer_number=[2], alignments=[0,180], verticals=[0,3.8+0.07*dz])
     set.config_writer()
     dir = set.multilayer_directory[1:]
     print(dir)
@@ -36,12 +36,12 @@ for dz in range(20):
         params["NSW"]=2
         v.INCAR_writer(v.params,subdir + "/INCAR")
         
-        if re.match("config_WW_SeSe",f):
-            print(subdir)
-            masterdir = os.getcwd()
-            print(masterdir)
-            os.chdir(os.getcwd()+subdir)
-            copyfile(masterdir + '/bat_vasp', os.getcwd()+'/bat_vasp')
-            copyfile(masterdir + '/params.conf', os.getcwd()+'/params.conf')
-            os.system('sbatch bat_vasp')
-            os.chdir(masterdir)
+        #if re.match("config_WW_SeSe",f):
+        print(subdir)
+        masterdir = os.getcwd()
+        print(masterdir)
+        os.chdir(os.getcwd()+subdir)
+        copyfile(masterdir + '/bat_vasp', os.getcwd()+'/bat_vasp')
+        copyfile(masterdir + '/params.conf', os.getcwd()+'/params.conf')
+        os.system('sbatch bat_vasp')
+        os.chdir(masterdir)

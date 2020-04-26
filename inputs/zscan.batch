@@ -16,5 +16,5 @@ source activate $CONDAENV_NAME
 
 module list
 
-python vasp_out.py
+python relax.py $VASP_FILEPATH
 

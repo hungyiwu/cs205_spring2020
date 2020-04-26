@@ -8,5 +8,10 @@
 #SBATCH -e job_%j.err # Standard err goes to this file
 #SBATCH --account=cs205
 
+
+module load intel/17.0.4-fasrc01 
+module load impi/2017.2.174-fasrc01
+module list 
+
 source params.conf
 mpirun -n $SLURM_NTASKS $VASP_FILEPATH

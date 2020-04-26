@@ -101,6 +101,7 @@ class Vasp_Config(object):
     def POSCAR_writer(self,fname="/POSCAR"):
         vac = 15 # vacuum spacing
         c = vac + np.sum(self.dz) + np.sum(self.zsep)
+        c = self.nlayers * 6 + 10
         a0 = np.mean(self.a0) # let the combined lattice constant be the averaged value
         A0 = [[1*a0, 0, 0],
             [-0.5*a0, sqrt(3)/2*a0, 0],
@@ -113,7 +114,7 @@ class Vasp_Config(object):
         coords = np.zeros([self.nlayers*3,3])
         z_here = 0
         for l in range(self.nlayers):
-            relax[l*3][2]=False
+            relax[l*3][2]=False # do not relax the z position of the metal
             z_here = z_here + self.dz[l]
             if l > 0:
                 z_here = z_here + self.zsep[l]

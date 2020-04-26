@@ -4,13 +4,14 @@ import sys
 import os
 import re
 from shutil import copyfile
+import time
 
 vasp_dir = "/vasp_relax_test/" # master directory to run vasp
 
 # generate input files for 10 different layer separations
-for dz in range(10):
+for dz in range(20):
     # create config file
-    set = mcg.MultilayerSet(layer_number=[2], alignments=[0,0], verticals=[0,6+0.1*dz])
+    set = mcg.MultilayerSet(layer_number=[2], alignments=[0,180], verticals=[0,4.5+0.05*dz])
     set.config_writer()
     dir = set.multilayer_directory[1:]
     print(dir)
@@ -23,7 +24,7 @@ for dz in range(10):
         copyfile(os.getcwd()+dir+f,os.getcwd()+vasp_dir+folder+"/config")
         
         subdir = vasp_dir+folder
-        print(subdir)
+        # print(subdir)
         v = vc.Vasp_Config(target=os.getcwd()+subdir+"/config")
     
         v.POSCAR_writer(subdir+"/POSCAR")
@@ -32,10 +33,15 @@ for dz in range(10):
         params = v.params
         params["ISIF"]=3
         params["NPAR"]=2
-        params["NSW"]=1
+        params["NSW"]=2
         v.INCAR_writer(v.params,subdir + "/INCAR")
         
-        if re.match(f, "MoPd_TeTe_alignments__0_0_verticals"):
-            vasp_filepath = sys.argv[1]
-            v.vasp_run(vaspdir=vasp_filepath,np="4")
-
+        if re.match("config_WW_SeSe",f):
+            print(subdir)
+            masterdir = os.getcwd()
+            print(masterdir)
+            os.chdir(os.getcwd()+subdir)
+            copyfile(masterdir + '/bat_vasp', os.getcwd()+'/bat_vasp')
+            copyfile(masterdir + '/params.conf', os.getcwd()+'/params.conf')
+            os.system('sbatch bat_vasp')
+            os.chdir(masterdir)

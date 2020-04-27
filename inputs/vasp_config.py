@@ -13,7 +13,7 @@ class Vasp_Config(object):
     # Create the input file for layered TMDCs
     # Read from config:
 
-    def __init__(self, target="config"):
+    def __init__(self, target="config",master_dir=os.getcwd()):
         self.a0 = 0 # lattice constant
         self.zsep = 0 # chalcogen-metal separation
         self.alignment = 0 # 0 deg. or 180 deg. / (parallel or anti-parallel)
@@ -77,7 +77,7 @@ class Vasp_Config(object):
                 self.dz[l] = float(lines[3])
                 
                 # read POSCAR
-                filepath = "./TMDC_poscar/"
+                filepath = master_dir+"/TMDC_poscar/"
             
                 fname = "POSCAR_"
                 for n in range(len(mat)):

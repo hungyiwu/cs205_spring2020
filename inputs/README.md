@@ -1,12 +1,18 @@
 # Create VASP inputs files and combine monolayer TMDCs
 
-To run the work flow, do `sbatch bat`
+To run the work flow, first do 
+
+`sbatch zscan.batch`, which runs 20 vasp calculations at different interlayer separations 
+
+Then do `sbatch bat`, which first extract the optimal interlayer separation and do a relaxation calculation at the optimal spacing, and copies the output structure and creates the INCAR for the force field calculation
+
 
 ### General Workflow
-0. Create different config files using the MultilayerSet class in multilayer_config_generator.py
+0. Create different config files using the MultilayerSet class in `multilayer_config_generator.py`
 1. Combine different layers using the input in `config` and create VASP input files
-2. Run VASP calculation that allows ions to move in the z-direction to find optimal interlayer separations
-3. Copy the relaxed structure to `POSCAR-unit`, rewrite `INCAR-ff` for the force field calculation (same setting except for letting `NSW=1` for no ionic relaxation)
+2. Run VASP multiple calculations at different interlayer separation files that allows ions to move in the z-direction to find optimal interlayer separations 
+3. Fit 
+4. Copy the relaxed structure to `POSCAR-unit`, rewrite `INCAR-ff` for the force field calculation (same setting except for letting `NSW=1` for no ionic relaxation)
 
 Edit `config` file as needed 
 
@@ -45,4 +51,4 @@ After the structure construction, perform a VASP calculation to allow out-of-pla
 
 After the relaxation calculation is finished, copy the relaxed structure in CONTCAR to POSCAR-unit.
 
-### Note: need to adjust parameter `NPAR` or `NCORE` in `INCAR` depending on the number of cores used
+### Note: need to adjust parameter `NPAR` or `NCORE` in `INCAR` depending on the number of cores used. Each run uses 4 cores by default. 

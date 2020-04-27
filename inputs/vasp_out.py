@@ -22,7 +22,7 @@ align = [0, 180]
 for dz in range(nz):
     z[dz] = 3.8+0.07*dz
     # create config file
-    set = mcg.MultilayerSet(layer_number=[2], alignments=align, verticals=[0,3.7+0.05*dz])
+    set = mcg.MultilayerSet(layer_number=[2], alignments=align, verticals=[0,3.8+0.07*dz])
     set.config_writer()
     
     fname = set.fname

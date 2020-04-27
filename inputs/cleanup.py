@@ -1,6 +1,7 @@
 import vasp_config as vc 
 import os
 from shutil import copyfile
+import phonopy_config_generator as pcg
 
 vasp_dir_new = '/vasp_relax/'
 phonopy_inputs_dir = '/phonopy_inputs/'
@@ -22,3 +23,6 @@ for dir in os.listdir(os.getcwd()+vasp_dir_new):
     copyfile("CONTCAR", master_dir+phonopy_inputs_dir+dir+"/POSCAR-unit")
     v.relax_off(master_dir+phonopy_inputs_dir+dir+"/POSCAR-unit") # turn off selective dynamics
     
+    #create band.conf and mesh.conf for phonopy input
+    p = pcg.PhonopyConfig(config_f=os.getcwd()+"/config",params_f=master_dir+'/phonopy_params.conf')
+    p.phonopy_config_writer(band=master_dir+phonopy_inputs_dir+dir+'/band.conf',mesh=master_dir+phonopy_inputs_dir+dir+'/mesh.conf')

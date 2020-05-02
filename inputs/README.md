@@ -11,8 +11,9 @@ Then do `sbatch bat`, which first extract the optimal interlayer separation and 
 0. Create different config files using the MultilayerSet class in `multilayer_config_generator.py`
 1. Combine different layers using the input in `config` and create VASP input files
 2. Run VASP multiple calculations at different interlayer separation files that allows ions to move in the z-direction to find optimal interlayer separations 
-3. Fit 
-4. Copy the relaxed structure to `POSCAR-unit`, rewrite `INCAR-ff` for the force field calculation (same setting except for letting `NSW=1` for no ionic relaxation)
+3. Fit the ground state energy vs. the interlayer separation as a function of z to a parabolic function. Extract the optimal interlayer separation 
+4. Perform a relaxation calculation at the optimal interlayer spearation. Copy the geometry to `/phonopy_inputs/' folder 
+5. Copy the relaxed structure to `POSCAR-unit`, rewrite `INCAR-ff` for the force field calculation (same setting except for letting `NSW=1` for no ionic relaxation)
 
 Edit `config` file as needed 
 

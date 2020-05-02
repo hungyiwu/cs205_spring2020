@@ -13,6 +13,5 @@ source params.conf
 source activate $CONDAENV_NAME
 module list
 
-
 python cleanup.py 
 

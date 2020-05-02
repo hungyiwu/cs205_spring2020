@@ -1,3 +1,4 @@
+# ziyan zhu
 import vasp_config as vc
 import multilayer_config_generator as mcg
 import sys
@@ -8,10 +9,13 @@ import time
 
 vasp_dir = "/vasp_relax_test/" # master directory to run vasp
 
-# generate input files for 10 different layer separations
+align = [0, 180]
+
+# generate input files for 20 different layer separations
+# 05/02/2020: consider hetero-bilayers
 for dz in range(20):
     # create config file
-    set = mcg.MultilayerSet(layer_number=[2], alignments=[0,180], verticals=[0,3.8+0.07*dz])
+    set = mcg.MultilayerSet(layer_number=[2], alignments=align, verticals=[0,3.8+0.07*dz])
     set.config_writer()
     dir = set.multilayer_directory[1:]
     print(dir)
@@ -36,12 +40,10 @@ for dz in range(20):
         params["NSW"]=2
         v.INCAR_writer(v.params,subdir + "/INCAR")
         
-        #if re.match("config_WW_SeSe",f):
         print(subdir)
         masterdir = os.getcwd()
         print(masterdir)
         os.chdir(os.getcwd()+subdir)
         copyfile(masterdir + '/bat_vasp', os.getcwd()+'/bat_vasp')
         copyfile(masterdir + '/params.conf', os.getcwd()+'/params.conf')
-        os.system('sbatch bat_vasp')
         os.chdir(masterdir)

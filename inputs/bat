@@ -10,4 +10,4 @@
 
 
 sbatch relaxation.batch 
-#sbatch --dependency=singleton cleanup.batch
+sbatch --dependency=singleton cleanup.batch

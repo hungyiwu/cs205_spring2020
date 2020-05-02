@@ -12,10 +12,10 @@ vasp_dir = "/vasp_relax_test/" # master directory to run vasp
 align = [0, 0]
 
 # generate input files for 20 different layer separations
-# 05/02/2020: consider hetero-bilayers
-for dz in range(20):
+# 05/02/2020: consider general cases
+for dz in range(10):
     # create config file
-    set = mcg.MultilayerSet(layer_number=[2], alignments=align, verticals=[0,3.8+0.07*dz])
+    set = mcg.MultilayerSet(layer_number=[2], alignments=align, verticals=[0,3.8+0.14*dz])
     set.config_writer()
     dir = set.multilayer_directory[1:]
     print(dir)

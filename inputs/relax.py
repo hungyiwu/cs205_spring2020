@@ -9,7 +9,7 @@ import time
 
 vasp_dir = "/vasp_relax_test/" # master directory to run vasp
 
-align = [0, 180]
+align = [0, 0]
 
 # generate input files for 20 different layer separations
 # 05/02/2020: consider hetero-bilayers

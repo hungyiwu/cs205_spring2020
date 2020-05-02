@@ -17,5 +17,6 @@ source activate $CONDAENV_NAME
 module list
 
 python relax.py $VASP_FILEPATH
-sbatch --dependecty=singleton relaxation.batch 
-sbatch --dependency=singleton cleanup.batch
+sbatch --dependency=singleton relax_run.batch
+#python --dependeccy=singleton vasp_out.py
+#python --dependency=singleton cleanup.py

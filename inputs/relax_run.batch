@@ -1,0 +1,26 @@
+#!/bin/bash
+#SBATCH --job-name=vasp_job
+#SBATCH -n 1 # Number of cores requested
+#SBATCH -t 0-01:00 # Runtime in minutes
+#SBATCH -p shared,test # Partition to submit to
+#SBATCH --mem-per-cpu=1000 # Memory per cpu in MB (see also--mem)
+#SBATCH -o master_%j.out # Standard out goes to this file
+#SBATCH -e master_%j.err # Standard err goes to this file
+#SBATCH --account=cs205
+
+cd vasp_relax_test
+# grab the list of directories, and export it so the 'child' sbatch jobs can access it
+export DIR=($(ls *))
+
+# get size of array
+NUMFASTQ=${#DIR[@]}
+# now subtract 1 as we have to use zero-based indexing (first cell is 0)
+ZBNUMFASTQ=$(($NUMFASTQ - 1))
+
+echo NUMFASTQ
+
+# now submit to SLURM
+if [ $ZBNUMFASTQ -ge 0 ]; then
+  sbatch --array=0-$ZBNUMFASTQ%20 $(DIR[$SLRUM_ARRAY_TASK_ID])/bat_vasp
+fi
+

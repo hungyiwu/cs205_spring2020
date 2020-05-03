@@ -12,9 +12,11 @@ if __name__ == '__main__':
     survey_filepath = './survey_result.csv'
     output_filepath = './selected_survey_result.csv'
 
-    # filter by formula and space group
+    # load data
     formula_df = pd.read_csv(formula_filepath)
     survey_df = pd.read_csv(survey_filepath)
+
+    # filter by formula and space group
     survey_df = survey_df.merge(formula_df, on=['formula', 'space_group'],
             how='inner')
 
@@ -23,11 +25,14 @@ if __name__ == '__main__':
             & (survey_df['count_unique_C'] <= 2)
     survey_df = survey_df.loc[mask]
 
-    # filter by spacing
+    # filter by lattice shape
     degree_target = [59, 60, 61, 119, 120, 121]
+    mask = survey_df['ab_angle(degree)'].apply(lambda x: int(np.round(x)) in degree_target)
+    survey_df = survey_df.loc[mask]
+
+    # filter by c-axis
     caxis_threshold = 15
-    mask = survey_df['ab_angle(degree)'].apply(lambda x: int(np.round(x)) in degree_target)\
-            & (survey_df['caxis'] > caxis_threshold)
+    mask = (survey_df['caxis'] > caxis_threshold)
     survey_df = survey_df.loc[mask]
 
     # label with "good as-is" or "need to extract mono-layer"
@@ -37,6 +42,5 @@ if __name__ == '__main__':
     survey_df['mono_layer'] = mask
 
     # save selected table
-    survey_df.loc[mask]\
-            .sort_values('consensus_formula')\
+    survey_df.sort_values('consensus_formula')\
             .to_csv(output_filepath, index=False)

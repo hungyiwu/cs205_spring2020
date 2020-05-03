@@ -1,6 +1,7 @@
 import os
 import shutil
 
+import numpy as np
 import pandas as pd
 
 if __name__ == '__main__':
@@ -19,20 +20,21 @@ if __name__ == '__main__':
 
     # filter by atom counts
     mask = (survey_df['count_unique_TM'] == 1)\
-            & (survey_df['count_TM'] == 1)\
-            & (survey_df['count_unique_C'] <= 2)\
-            & (survey_df['count_C'] == 2)\
-            & (survey_df['nsites'] == 3)
+            & (survey_df['count_unique_C'] <= 2)
     survey_df = survey_df.loc[mask]
 
     # filter by spacing
-    degree_target = 60
-    degree_threshold = 1
+    degree_target = [59, 60, 61, 119, 120, 121]
     caxis_threshold = 15
-    mask = survey_df['ab_angle(degree)'].apply(lambda x:\
-            abs(x-degree_target) < degree_threshold)\
+    mask = survey_df['ab_angle(degree)'].apply(lambda x: int(np.round(x)) in degree_target)\
             & (survey_df['caxis'] > caxis_threshold)
     survey_df = survey_df.loc[mask]
+
+    # label with "good as-is" or "need to extract mono-layer"
+    mask = (survey_df['count_TM'] == 1)\
+            & (survey_df['count_C'] == 2)\
+            & (survey_df['nsites'] == 3)
+    survey_df['mono_layer'] = mask
 
     # save selected table
     survey_df.loc[mask]\

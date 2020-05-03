@@ -1,1 +1,4 @@
-material_id,formula,space_group,nsites,count_unique_TM,count_TM,count_unique_C,count_C,consensus_formula,ab_angle(degree),caxis
+material_id,formula,space_group,nsites,count_unique_TM,count_TM,count_unique_C,count_C,consensus_formula,ab_angle(degree),caxis,mono_layer
+mp-1023934,MoSe2,P-6m2,3,1,1,1,2,MoSe2,120.000008867984,17.725711999999998,True
+mp-1023937,WS2,P-6m2,3,1,1,1,2,WS2,120.00001370802545,17.101201,True
+mp-1023936,WSe2,P-6m2,3,1,1,1,2,WSe2,120.00000904278978,17.527085,True

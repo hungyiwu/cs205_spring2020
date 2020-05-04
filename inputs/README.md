@@ -1,10 +1,9 @@
 # Create VASP inputs files and combine monolayer TMDCs
 
-To run the work flow, first do 
+To run the work flow, simply  do 
 
-`sbatch zscan.batch`, which runs 20 vasp calculations at different interlayer separations 
-
-Then do `sbatch bat`, which first extract the optimal interlayer separation and do a relaxation calculation at the optimal spacing, and copies the output structure and creates the INCAR for the force field calculation
+`sbatch zscan.batch`, which runs 10 vasp calculations at different interlayer separations
+After all relaxation calculations have finished, first extract the optimal interlayer separation and do a relaxation calculation at the optimal spacing, and copies the output structure and creates the INCAR for the force field calculation
 
 
 ### General Workflow

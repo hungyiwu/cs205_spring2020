@@ -13,6 +13,8 @@ align = [0, 0]
 
 # generate input files for 20 different layer separations
 # 05/02/2020: consider general cases
+masterdir = os.getcwd()
+copyfile(masterdir + '/bat_vasp', masterdir+vasp_dir+'/bat_vasp')
 for dz in range(10):
     # create config file
     set = mcg.MultilayerSet(layer_number=[2], alignments=align, verticals=[0,3.8+0.14*dz])
@@ -41,9 +43,8 @@ for dz in range(10):
         v.INCAR_writer(v.params,subdir + "/INCAR")
         
         print(subdir)
-        masterdir = os.getcwd()
-        print(masterdir)
         os.chdir(os.getcwd()+subdir)
-        copyfile(masterdir + '/bat_vasp', os.getcwd()+'/bat_vasp')
+        copyfile(masterdir + '/bat_vasp', masterdir+vasp_dir+'/bat_vasp')
+        #copyfile(masterdir + '/bat_vasp', os.getcwd()+'/bat_vasp')
         copyfile(masterdir + '/params.conf', os.getcwd()+'/params.conf')
         os.chdir(masterdir)

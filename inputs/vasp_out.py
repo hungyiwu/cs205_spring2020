@@ -38,6 +38,7 @@ fname = [f[7:] for f in fname]
 # go through the unique materials combination and do a fit
 
 masterdir = os.getcwd()
+z_list = []
 for f_master in fname:
     E0 = [] # the list of energies
     m = re.search('verticals',f_master)
@@ -49,48 +50,58 @@ for f_master in fname:
     
             os.chdir(os.getcwd()+subdir)
             print(os.getcwd())
-            outcar = outputs.Outcar("OUTCAR")
-            E0.append(outcar.final_energy)
+            if os.path.exists("OUTCAR"):
+                outcar = outputs.Outcar("OUTCAR")
+                E0.append(outcar.final_energy)
             os.chdir(masterdir)
     
-    E_list = E0-np.min(E0)
-    p = np.polyfit(z, E_list,2)
-    zmin = -p[1]/(2*p[0])
-    print(zmin)
+    if len(E0)!=0: # list is not empty
+        print(E0)
+        E_list = E0-np.min(E0)
+        p = np.polyfit(z, E_list,2)
+        zmin = -p[1]/(2*p[0])
+        z_list=[z_list,zmin]
+        print(zmin)
 
-    # submit another vasp run
-    # create config file
-    set = mcg.MultilayerSet(layer_number=[2], alignments=align, verticals=[0,zmin])
-    set.config_writer()
-    dir = set.multilayer_directory[1:]
-    print(dir)
-    fname = set.fname
+        # submit another vasp run
+        # create config file
+        set = mcg.MultilayerSet(layer_number=[2], alignments=align, verticals=[0,zmin])
+        set.config_writer()
+        dir = set.multilayer_directory[1:]
+        print(dir)
+        fname = np.sort(set.fname)
 
-    previous = None
-    for f in fname:
-        folder=f
-        # os.system("cd " + vasp_dir)
-        os.makedirs(os.getcwd()+vasp_dir_new+folder, exist_ok = True)
-        copyfile(os.getcwd()+dir+f,os.getcwd()+vasp_dir_new+folder+"/config")
+        for f in fname:
+            folder=f[7:]
+            if folder[0:len(pattern)] == pattern:
+                os.makedirs(os.getcwd()+vasp_dir_new+folder, exist_ok = True)
+                copyfile(os.getcwd()+dir+f,os.getcwd()+vasp_dir_new+folder+"/config")
 
-        subdir = vasp_dir_new+folder
-        # print(subdir)
-        v = vc.Vasp_Config(target=os.getcwd()+subdir+"/config")
+                subdir = vasp_dir_new+folder
+                # print(subdir)
+                v = vc.Vasp_Config(target=os.getcwd()+subdir+"/config")
 
-        v.POSCAR_writer(subdir+"/POSCAR")
-        v.POTCAR_writer(subdir+"/POTCAR",subdir+"/POSCAR")
-        v.KPOINT_writer(subdir+"/KPOINTS")
-        params = v.params
-        params["ISIF"]=3
-        params["NPAR"]=2
-        params["NSW"]=2
-        v.INCAR_writer(v.params,subdir + "/INCAR")
+                v.POSCAR_writer(subdir+"/POSCAR")
+                v.POTCAR_writer(subdir+"/POTCAR",subdir+"/POSCAR")
+                v.KPOINT_writer(subdir+"/KPOINTS")
+                params = v.params
+                params["ISIF"]=3
+                params["NPAR"]=2
+                params["NSW"]=2
+                v.INCAR_writer(v.params,subdir + "/INCAR")
 
-        print(subdir)
-        masterdir = os.getcwd()
-        print(masterdir)
-        os.chdir(os.getcwd()+subdir)
-        copyfile(masterdir + '/bat_vasp', os.getcwd()+'/bat_vasp')
-        copyfile(masterdir + '/params.conf', os.getcwd()+'/params.conf')
-        os.system('sbatch bat_vasp')
-        os.chdir(masterdir)
+                print(subdir)
+                masterdir = os.getcwd()
+                print(masterdir)
+                os.chdir(os.getcwd()+subdir)
+                copyfile(masterdir + '/bat_vasp', os.getcwd()+'/bat_vasp')
+                copyfile(masterdir + '/params.conf', os.getcwd()+'/params.conf')
+                os.system('sbatch bat_vasp')
+                os.chdir(masterdir)
+
+# write to file
+f = open("zlist.txt", "w+")
+for iii in range(len(fname)):
+    f.write(fname[iii] + ',' + z_list[iii] + '\n')
+f.vlose()
+

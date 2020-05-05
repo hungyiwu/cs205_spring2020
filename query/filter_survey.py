@@ -30,11 +30,6 @@ if __name__ == '__main__':
     mask = survey_df['ab_angle(degree)'].apply(lambda x: int(np.round(x)) in degree_target)
     survey_df = survey_df.loc[mask]
 
-    # filter by c-axis
-    caxis_threshold = 15
-    mask = (survey_df['caxis'] > caxis_threshold)
-    survey_df = survey_df.loc[mask]
-
     # label with "good as-is" or "need to extract mono-layer"
     mask = (survey_df['count_TM'] == 1)\
             & (survey_df['count_C'] == 2)\

@@ -9,15 +9,16 @@ import time
 
 vasp_dir = "/vasp_relax_test/" # master directory to run vasp
 
-align = [0, 0]
-
+align = []
+for arg in sys.argv[2:]:
+    align.append(int(arg))
 # generate input files for 20 different layer separations
 # 05/02/2020: consider general cases
 masterdir = os.getcwd()
 copyfile(masterdir + '/bat_vasp', masterdir+vasp_dir+'/bat_vasp')
-for dz in range(10):
+for dz in range(15):
     # create config file
-    set = mcg.MultilayerSet(layer_number=[2], alignments=align, verticals=[0,3.8+0.14*dz])
+    set = mcg.MultilayerSet(layer_number=[2], alignments=align, verticals=[0,3.6+0.14*dz])
     set.config_writer()
     dir = set.multilayer_directory[1:]
     print(dir)

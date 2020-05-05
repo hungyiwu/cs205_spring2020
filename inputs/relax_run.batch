@@ -22,6 +22,6 @@ echo Number of runs: $NUMFASTQ
 # now submit to SLURM
 pwd
 if [ $ZBNUMFASTQ -ge 0 ]; then
-    sbatch --array=0-$ZBNUMFASTQ%5 bat_vasp #--export=cwd=./${DIR[$SLURM_ARRAY_TASK_ID]}  ./${DIR[$SLURM_ARRAY_TASK_ID]}bat_vasp
+    sbatch --array=0-$ZBNUMFASTQ%50 bat_vasp #--export=cwd=./${DIR[$SLURM_ARRAY_TASK_ID]}  ./${DIR[$SLURM_ARRAY_TASK_ID]}bat_vasp
 fi
 

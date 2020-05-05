@@ -13,16 +13,18 @@ import numpy as np
 
 vasp_dir = "/vasp_relax_test/" # master directory for the previous run
 vasp_dir_new = "/vasp_relax/" # new directory to run vasp at the optimal z 
-nz = 10
+nz = 15
 z = np.zeros([nz])
-align = [0, 0]
+align = []
+for arg in sys.argv[1:]:
+    align.append(int(arg))
 fname_all = np.array([])
 
 # read from vasp runs and create a list of all subdirectories
 for dz in range(nz):
     z[dz] = 3.8+0.14*dz
     # create config file
-    set = mcg.MultilayerSet(layer_number=[2], alignments=align, verticals=[0,3.8+0.14*dz])
+    set = mcg.MultilayerSet(layer_number=[2], alignments=align, verticals=[0,3.6+0.14*dz])
     set.config_writer()
     
     fname = set.fname
@@ -60,7 +62,7 @@ for f_master in fname:
         E_list = E0-np.min(E0)
         p = np.polyfit(z, E_list,2)
         zmin = -p[1]/(2*p[0])
-        z_list=[z_list,zmin]
+        z_list.append(zmin)
         print(zmin)
 
         # submit another vasp run
@@ -74,34 +76,38 @@ for f_master in fname:
         for f in fname:
             folder=f[7:]
             if folder[0:len(pattern)] == pattern:
+                
                 os.makedirs(os.getcwd()+vasp_dir_new+folder, exist_ok = True)
-                copyfile(os.getcwd()+dir+f,os.getcwd()+vasp_dir_new+folder+"/config")
+                if os.path.exists(os.getcwd()+vasp_dir_new+folder+'/CONTCAR'):
+                    print("VASP run already done. Skip")
+                else:
+                    copyfile(os.getcwd()+dir+f,os.getcwd()+vasp_dir_new+folder+"/config")
 
-                subdir = vasp_dir_new+folder
-                # print(subdir)
-                v = vc.Vasp_Config(target=os.getcwd()+subdir+"/config")
+                    subdir = vasp_dir_new+folder
+                    # print(subdir)
+                    v = vc.Vasp_Config(target=os.getcwd()+subdir+"/config")
 
-                v.POSCAR_writer(subdir+"/POSCAR")
-                v.POTCAR_writer(subdir+"/POTCAR",subdir+"/POSCAR")
-                v.KPOINT_writer(subdir+"/KPOINTS")
-                params = v.params
-                params["ISIF"]=3
-                params["NPAR"]=2
-                params["NSW"]=2
-                v.INCAR_writer(v.params,subdir + "/INCAR")
+                    v.POSCAR_writer(subdir+"/POSCAR")
+                    v.POTCAR_writer(subdir+"/POTCAR",subdir+"/POSCAR")
+                    v.KPOINT_writer(subdir+"/KPOINTS")
+                    params = v.params
+                    params["ISIF"]=3
+                    params["NPAR"]=2
+                    params["NSW"]=2
+                    v.INCAR_writer(v.params,subdir + "/INCAR")
 
-                print(subdir)
-                masterdir = os.getcwd()
-                print(masterdir)
-                os.chdir(os.getcwd()+subdir)
-                copyfile(masterdir + '/bat_vasp', os.getcwd()+'/bat_vasp')
-                copyfile(masterdir + '/params.conf', os.getcwd()+'/params.conf')
-                os.system('sbatch bat_vasp')
-                os.chdir(masterdir)
+                    #print(subdir)
+                    masterdir = os.getcwd()
+                    #print(masterdir)
+                    os.chdir(os.getcwd()+subdir)
+                    copyfile(masterdir + '/bat_vasp', os.getcwd()+'/bat_vasp')
+                    copyfile(masterdir + '/params.conf', os.getcwd()+'/params.conf')
+                    os.system('sbatch bat_vasp')
+                    os.chdir(masterdir)
 
 # write to file
 f = open("zlist.txt", "w+")
 for iii in range(len(fname)):
-    f.write(fname[iii] + ',' + z_list[iii] + '\n')
-f.vlose()
+    f.write(fname[iii] + ',' + str(z_list[iii]) + '\n')
+f.close()
 

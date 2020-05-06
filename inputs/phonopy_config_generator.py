@@ -56,9 +56,9 @@ class PhonopyConfig(object):
 
         #write band.conf
         with open(band,'w') as f:
-            f.write('EIGENVECTORS = .TRUE.\n'+self.DIM+'\n'+self.ATOM_NAME+'\n'+self.BAND+'\n'+self.BAND_POINTS+'\n'+'BAND_LABELS=\Gamma M K \Gamma')
+            f.write('EIGENVECTORS = .TRUE.\n'+self.DIM+'\n'+self.ATOM_NAME+'\n'+self.BAND+'\n'+self.BAND_POINTS+'\n'+'BAND_LABELS=\Gamma M K \Gamma'+'\nHDF5=.TRUE.')
 
         with open(mesh,'w') as f:
-            f.write(self.DIM+'\n'+self.ATOM_NAME+'\n'+self.MP)
+            f.write(self.DIM+'\n'+self.ATOM_NAME+'\n'+self.MP+'\nHDF5=.TRUE.')
 
 

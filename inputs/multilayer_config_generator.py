@@ -14,7 +14,7 @@ class MultilayerSet(object):
         else:
             self.layer_number = layer_number
         if monolayer_directory is None:
-            self.monolayer_directory = "./TMDC_poscar/" #default monolayer directory
+            self.monolayer_directory = "./TMDC_poscar_all/" #default monolayer directory
         else:
             self.monolayer_directory = monolayer_directory
         if multilayer_directory is None:

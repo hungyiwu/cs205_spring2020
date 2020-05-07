@@ -12,8 +12,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.optimize import curve_fit
 
-vasp_dir = "/vasp_relax_test/" # master directory for the previous run
-vasp_dir_new = "/vasp_relax/" # new directory to run vasp at the optimal z 
+#vasp_dir = "/vasp_relax_test/" # master directory for the previous run
+#vasp_dir_new = "/vasp_relax/" # new directory to run vasp at the optimal z 
+vasp_dir = "relaxed_bilayer_multilayer_TMDC_config" # master directory for the previous run
+vasp_dir_new = "/vasp_relax_trilayer/" # new directory to run vasp at the optimal z 
 nz = 15
 z = np.zeros([nz])
 align = []

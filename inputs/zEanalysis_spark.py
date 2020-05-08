@@ -34,11 +34,11 @@ def parser(lines):
     return a1_l1,a2_l1,a1_l2,a2_l2,alignment
 
 
-#try:
-#    outdir = sys.argv[1]
-#except:
-#    outdir = "output"
-#
+try:
+    fpath = sys.argv[1]
+except:
+    fpath = "../results/"
+
 # organize zElist
 f = open("zElist.txt","r")
 f2 = open("zElist_organized.txt","w+")
@@ -47,7 +47,6 @@ f2.write("atom1_l1,atom2_l1,atom1_l2,atom2_l2,orientation,z,E0\n")
 f3 = open("zoptlist.txt","r")
 f4 = open("zoptlist_organized.txt","w+")
 f4.write("atom1_l1,atom2_l1,atom1_l2,atom2_l2,orientation,z\n")
-
 
 for lines in f:
     line = re.split(",",lines)
@@ -68,7 +67,7 @@ f2.close()
 f3.close()
 f4.close()
 
-conf = SparkConf().setMaster('local').setAppName('zE')
+conf = SparkConf().setMaster('local[2]').setAppName('zE')
 sqlContext = SQLContext(SparkContext())
 
 df_full = sqlContext.read.csv("zElist_organized.txt",header=True)

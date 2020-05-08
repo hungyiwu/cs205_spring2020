@@ -1,0 +1,19 @@
+#!/bin/bash
+#SBATCH --job-name=relax
+#SBATCH -n 2 # Number of cores requested
+#SBATCH -t 8:00:00 # Runtime in minutes
+#SBATCH -p kaxiras # Partition to submit to
+#SBATCH --mem-per-cpu=5000 # Memory per cpu in MB (see also--mem)
+#SBATCH -o relax_final_%j.out # Standard out goes to this file
+#SBATCH -e relax_final_%j.err # Standard err goes to this file
+##SBATCH --account=cs205
+
+module load jdk/10.0.1-fasrc01
+module load python 
+source params.conf
+source activate $CONDAENV_NAME
+
+module list
+
+~/spark-2.2.0-bin-hadoop2.7/bin/spark-submit zEanalysis.py $SLURM_NTASKS
+

@@ -1,8 +1,8 @@
 # Create VASP inputs files and combine monolayer TMDCs
 ## Before you start 
-- Edit `source.config` to change the conda environment name 
+- Make a conda environment using the `conda-env.yml` file
+- Edit `params.conf` to change the conda environment name 
 - Make sure `vasp.std` is in this folder
-- Install Python module `pymatgen`
 
 ## Relaxation
 In this step, we sample 15 different interlayer spacings between bilayers (aligned/0-deg. or antialigned/180.deg) in order to find the optimal positions between each pair of layers. The outputs generated include: 
@@ -37,6 +37,11 @@ which save the data that contains the given metal, chalcogen, with the given ali
 
 `<<spark-directory-on-Cannon>>//spark-2.2.0-bin-hadoop2.7/bin/spark-submit select_zEdata.py Mo S 0 4`
 
+
+## Phonopy and Force Field
+To run the workflow, ensure that the VASP output files from the previous step are in `/n/holyscratch01/cs205/group4/example.
+Then, do: 
+`sbatch preprocessing.batch`.
 
 ## General Workflow
 0. Create different config files using the MultilayerSet class in `multilayer_config_generator.py`

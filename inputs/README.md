@@ -20,7 +20,10 @@ After all relaxation calculations have finished, first extract the optimal inter
 
 To parse the output files and plot the results from `zElist.txt` and `zoptlist.txt`, run
 
-`spark-submit zEanalysis_spark.py`. 
+`spark-submit zEanalysis_spark.py`. This will generates three figures:
+![z_TeTe](https://github.com/hywu0110/cs205_spring2020/blob/inputs/results/z_TeTe.png)
+![E0_TeTe](https://github.com/hywu0110/cs205_spring2020/blob/inputs/results/E0_TeTe.png)
+![E0_vs_z_TeTe](https://github.com/hywu0110/cs205_spring2020/blob/inputs/results/E0_vs_z_TeTe.png)
 
 This particular script groups the materials by chalcogens. We use Spark to organize the data. A speedup test using Spark dataframe is contained in the folder `/zEanalysis`. To run a speedup test, do 
 
@@ -29,7 +32,6 @@ This particular script groups the materials by chalcogens. We use Spark to organ
 which save the data that contains the given metal, chalcogen, with the given alignment (0 degree or 180 degrees), and <<np>> is the number of cores to use. For example, 
 
 `spark-submit select_zEdata.py Mo S 0 4`
-
 
 
 ## General Workflow

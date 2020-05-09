@@ -1,6 +1,15 @@
-# Term project of CS205 Spring 2020, group 4
+# Term project of CS205 Spring 2020, group 4: *Ab initio* phonon calculation in layered two-diensional materials
 
-Ab initio phonon calculation 2D material.
+
+## Introduction
+Two-dimensional materials (2D) are a class of atomically thin materials. The most famous example is graphene, which is a hexagonal lattice. These 2D materials have a wide range of physical properties. For example, hexagonal Boron Nitrice (hBN) is an insulator and is commonly used as a substrate experiment; transitition metal dichalcogenides (TMDCs) such as MoS_2 are semiconductors. 
+These 2D layered materials have become a favorite platform to manipulate their physical properties. Recently, people have been exploring van der Waals heterostructures, which refer to the layered assembilies of the 2D materials. They are mediated by long-range van der Waals interaction, and therefore are also called van der Waals heterostructures. The flexibility and available experimental control "knobs" make them an ideal platform to explore strongly correlated physics 
+
+![Periodic table](https://cdn.britannica.com/45/7445-050-CA28EA33/version-periodic-table-elements.jpg)
+
+# Software Installation
+The guide assumes you are on using Harvard Cannon. 
+
 
 ## Workflow
 
@@ -53,3 +62,13 @@ def generate_unitcell_POSCAR(formula, lattice_constant, template_POSCAR_file):
 ## List of 2D material
 
 source: https://www.materialscloud.org/discover/2dstructures/dashboard/list
+
+
+## Codes
+
+## Test Case
+Test runs are in branch `example`. 
+
+## Results
+
+## References 

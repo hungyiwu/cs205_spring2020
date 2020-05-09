@@ -59,19 +59,18 @@ To construct config files, use the multilayer_config_generator.py file. Read cla
 
 To construct the structure, do
 
-`import vasp_config as vc`
-
-`v = vc.Vasp_Config()` 
+```python
+import vasp_config as vc
+v = vc.Vasp_Config(target='config')
+```
 
 To write `POSCAR`, `POTCAR`, `KPOINTS`, and `INCAR` do 
-
-`v.POSCAR_writer()`
-
-`v.POTCAR_writer()`
-
-`v.KPOINTS_writer()`
-
-`v.KPOINTS_writer(v.params)`
+```python
+v.POSCAR_writer()
+v.POTCAR_writer()
+v.KPOINTS_writer()
+v.KPOINTS_writer(v.params)
+```
 
 Use and `params.config` from the phonopy pipeline to run initialize filepath, conda environment etc.
 
@@ -79,5 +78,10 @@ After the structure construction, perform a VASP calculation to allow out-of-pla
 
 After the relaxation calculation is finished, copy the relaxed structure in CONTCAR to POSCAR-unit.
 
-### Note: need to adjust parameter `NPAR` or `NCORE` in `INCAR` depending on the number of cores used. Each run uses 4 cores by default. 
+####Note: need to adjust parameter `NPAR` or `NCORE` in `INCAR` depending on the number of cores used. Each run uses 4 cores by default. Set `NPAR=SQRT(NCORES)`for optimal performance. To set input parameters in `INCAR`, do
 
+```python 
+paramas=v.params
+params["NSW"]=2
+v.INCAR_writer(v.params,subdir + "/INCAR")
+```

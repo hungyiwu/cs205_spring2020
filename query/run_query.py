@@ -22,8 +22,13 @@ if __name__ == '__main__':
                     },
                 'nelements':{'$in': [2, 3]},
                 }
-        properties = ['material_id', 'pretty_formula']
+        properties = ['material_id', 'pretty_formula', 'spacegroup', 'nsites']
         result = m.query(criteria=criteria, properties=properties)
 
-    result_df = pd.DataFrame.from_records(result)
+    record = [{'material_id': row['material_id'],
+        'formula': row['pretty_formula'],
+        'space_group': row['spacegroup']['symbol'],
+        'nsites': row['nsites'],
+        } for row in result]
+    result_df = pd.DataFrame.from_records(record)
     result_df.to_csv(output_filepath, index=False)

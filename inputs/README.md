@@ -20,7 +20,7 @@ After all relaxation calculations have finished, first extract the optimal inter
 
 To parse the output files and plot the results from `zElist.txt` and `zoptlist.txt`, run
 
-`spark-submit zEanalysis_spark.py`. This will generates three figures:
+`spark-submit zEanalysis_spark.py`. This will generates three figures and save to the `results` folder
 ![z_TeTe](https://github.com/hywu0110/cs205_spring2020/blob/inputs/results/z_TeTe.png)
 ![E0_TeTe](https://github.com/hywu0110/cs205_spring2020/blob/inputs/results/E0_TeTe.png)
 ![E0_vs_z_TeTe](https://github.com/hywu0110/cs205_spring2020/blob/inputs/results/E0_vs_z_TeTe.png)

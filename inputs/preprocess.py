@@ -4,10 +4,10 @@ from shutil import copyfile
 import phonopy_config_generator as pcg
 
 #change thiis to proper directory
-vasp_dir_new = '/n/holyscratch01/cs205/group4/zzhu/example/'
+vasp_dir_new = '/n/holyscratch01/cs205/group4/example-relax/'
 
 #change to desired output directory
-phonopy_inputs_dir = '/n/holyscratch01/cs205/group4/mwenny/example/'
+phonopy_inputs_dir = '/n/holyscratch01/cs205/group4/example-ff/'
 
 os.makedirs(phonopy_inputs_dir, exist_ok = True)
 temp_dir = '/temp_dir/'

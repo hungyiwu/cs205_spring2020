@@ -41,7 +41,7 @@ which save the data that contains the given metal, chalcogen, with the given ali
 ## Phonopy and Force Field
 To run the workflow, ensure that the VASP output files from the previous step are in `/n/holyscratch01/cs205/group4/example-relax`.
 Then, do: 
-`sbatch preprocessing.batch`.
+`sbatch preprocess.batch`.
 
 ## General Workflow
 0. Create different config files using the MultilayerSet class in `multilayer_config_generator.py`

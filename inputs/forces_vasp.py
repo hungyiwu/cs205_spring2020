@@ -7,7 +7,7 @@ import shutil
 #vasp_filepath, run_filepath = sys.argv[1], sys.argv[2]
 misc_filename_list = ['POTCAR', 'KPOINTS']
 
-phonopy_dir = '/n/holyscratch01/cs205/group4/mwenny/example/'
+phonopy_dir = '/n/holyscratch01/cs205/group4/example-ff/'
 master_dir = os.getcwd()
 
 #read supercell dimensions from phonopy parameters file

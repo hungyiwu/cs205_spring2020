@@ -4,7 +4,7 @@ import shutil
 import re
 
 #change to proper directory
-phonopy_dir = '/n/holyscratch01/cs205/group4/mwenny/example/'
+phonopy_dir = '/n/holyscratch01/cs205/group4/example-ff/'
 
 master_dir = os.getcwd()
 output_dir = sys.argv[1] #pass desired output to script

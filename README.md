@@ -5,12 +5,16 @@
 Two-dimensional materials (2D) are a class of atomically thin materials. The most famous example is graphene, which is a hexagonal lattice. These 2D materials have a wide range of physical properties. For example, hexagonal Boron Nitrice (hBN) is an insulator and is commonly used as a substrate experiment; transitition metal dichalcogenides (TMDCs) such as MoS_2 are semiconductors. 
 These 2D layered materials have become a favorite platform to manipulate their physical properties. Recently, people have been exploring van der Waals (vdW) heterostructures, which refer to the layered assembilies of the 2D materials. They are mediated by long-range vdW interaction, and therefore are also called vdW heterostructures. The flexibility and available experimental control "knobs", such as the material combination, relative twist angle, displacement field, and magnetic field, make them an ideal platform to explore strongly correlated physics. For example, strongly correlated insulator states and unconventional superconductivity were observed in twisted bilayer graphene, whose microscopic origin remains a open question. In this project, we develop a workflow to systematically calculate the phonon of layered heterostructures, specifically multi-layered TMDCs. This serves as the first step to investigate the role that phonon plays in the correlated states. 
 
-Phonons are collective excitations in solids, which are long-ranged lattice vibrations from the equilibrium. Here is an example showing different normal modes of lattice vibration in a 1D chain. 
+Phonons are collective excitations in solids, which are long-ranged lattice vibrations from the equilibrium. Phonon modes are responsible of creating attractive interaction that mediate superconductivity according to BCS theory or Bardeen–Cooper–Schrieffer theory. Here is an example showing different normal modes of lattice vibration in a 1D chain. 
+
 ![phonon](https://upload.wikimedia.org/wikipedia/commons/9/9b/1D_normal_modes_%28280_kB%29.gif)
+
 Similarly, here is a visualization of how phonon mode propages through a 2D solid: 
+
 ![2Dphonon](https://github.com/hywu0110/cs205_spring2020/blob/develop/results/geom/400px-Lattice_wave.svg.png)
 [Imgage source: Wikipedia] 
-Phonon modes are responsible of creating attractive interaction that mediate superconductivity according to BCS theory or Bardeen–Cooper–Schrieffer theory.
+
+
 
 Our calculations are based on Density Functional Theory (DFT), which is first-principles quantum mechanical model that computes electronic properties by solving the Scrhodinger's equation. Instead of using the full many-body wave function as the basis, it uses the electron density as the basis. According to Kohn-Sham theory, there is an one-to-one correspondence between the many-body wavefunction to electron density. This turns the many-body Schrodinger's equation to a so-called "Kohn-Sham Hamiltonian" that only involves electron density. The "Kohn-Sham Hamiltonian" is exact, with unknown exchange-correlation functionals. In DFT calculations, one needs to choose the exchange-correlation functional depending on the system of interest. 
 

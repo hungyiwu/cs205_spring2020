@@ -1,4 +1,8 @@
 # Create VASP inputs files and combine monolayer TMDCs
+## Before you start 
+- Edit `source.config` to change the conda environment name 
+- Make sure `vasp.std` is in this folder
+- Install Python module `pymatgen`
 
 ## Relaxation
 In this step, we sample 15 different interlayer spacings between bilayers (aligned/0-deg. or antialigned/180.deg) in order to find the optimal positions between each pair of layers. The outputs generated include: 
@@ -20,7 +24,7 @@ After all relaxation calculations have finished, first extract the optimal inter
 
 To parse the output files and plot the results from `zElist.txt` and `zoptlist.txt`, run
 
-`spark-submit zEanalysis_spark.py`. This will generates three figures and save to the `results` folder
+`<<spark-directory-on-Cannon>>//spark-2.2.0-bin-hadoop2.7/bin/spark-submit zEanalysis_spark.py`. This will generates three figures and save to the `results` folder
 ![z_TeTe](https://github.com/hywu0110/cs205_spring2020/blob/inputs/results/z_TeTe.png)
 ![E0_TeTe](https://github.com/hywu0110/cs205_spring2020/blob/inputs/results/E0_TeTe.png)
 ![E0_vs_z_TeTe](https://github.com/hywu0110/cs205_spring2020/blob/inputs/results/E0_vs_z_TeTe.png)
@@ -85,3 +89,29 @@ paramas=v.params
 params["NSW"]=2
 v.INCAR_writer(v.params,subdir + "/INCAR")
 ```
+
+## Description of Files 
+
+### vasp_config.py
+tool to combine layers according to the `config` file
+
+### relax.py
+creates directories for all bilayer combinations at 15 interlayer separations to prepare for vasp runs
+
+### bat_vasp
+calls VASP executatable in each subfolder for individual VASP runs
+
+### relax_run.batch
+calls `bat_vasp` in individual subfolder created by `relax.py`
+
+### vasp_out.py
+post-processes the output from VASP, fit E0 vs. z and find the interlayer separation corresponding to the minimum ground energy, submit another VASP calculation to relax atoms to the optimal positions at the optimal z
+
+### vasp_out.batch
+Batch file to call `vasp_out.py`
+
+### cleanup.py:
+Collects data from the final VASP run created by `vasp_out.py` and creates phonopy configuration files. Stores all the input information in folder `/phonopy_inputs`
+
+### cleanup.batch
+runs `cleanup.py`

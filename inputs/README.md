@@ -1,7 +1,7 @@
 # Create VASP inputs files and combine monolayer TMDCs
 
 ## Relaxation
-In this step, we sample 15 different interlayer spacings between bilayers in order to find the optimal positions between each pair of layers. The outputs generated include: 
+In this step, we sample 15 different interlayer spacings between bilayers (aligned/0-deg. or antialigned/180.deg) in order to find the optimal positions between each pair of layers. The outputs generated include: 
 
 1. the list of optimal interlayer spacing `zoptlist.txt` 
 2. ground state energy vs. interlayer spacing  `zElist.txt` 

@@ -1,13 +1,14 @@
-# Term project of CS205 Spring 2020, group 4: *Ab initio* phonon calculation in layered two-diensional materials
+# Term project of CS205 Spring 2020, group 4
+## *Ab initio* phonon calculation in layered two-diensional materials
 
 
 ## Introduction
 Two-dimensional materials (2D) are a class of atomically thin materials. The most famous example is graphene, which is a hexagonal lattice. These 2D materials have a wide range of physical properties. For example, hexagonal Boron Nitrice (hBN) is an insulator and is commonly used as a substrate experiment; transitition metal dichalcogenides (TMDCs) such as MoS_2 are semiconductors. 
-These 2D layered materials have become a favorite platform to manipulate their physical properties. Recently, people have been exploring van der Waals heterostructures, which refer to the layered assembilies of the 2D materials. They are mediated by long-range van der Waals interaction, and therefore are also called van der Waals heterostructures. The flexibility and available experimental control "knobs" make them an ideal platform to explore strongly correlated physics 
+These 2D layered materials have become a favorite platform to manipulate their physical properties. Recently, people have been exploring van der Waals heterostructures, which refer to the layered assembilies of the 2D materials. They are mediated by long-range van der Waals interaction, and therefore are also called van der Waals heterostructures. The flexibility and available experimental control "knobs", such as the material combination, relative twist angle, displacement field, and magnetic field, make them an ideal platform to explore strongly correlated physics. For example, strongly correlated insulator states and unconventional superconductivity were observed in twisted bilayer graphene, whose microscopic origin remains a open question. In this project, we develop a workflow to systematically calculate the phonon of layered heterostructures, specifically multi-layered TMDCs. This serves as the first step to investigate the role that phonon plays in the correlated states. 
 
 ![Periodic table](https://cdn.britannica.com/45/7445-050-CA28EA33/version-periodic-table-elements.jpg)
 
-# Software Installation
+## Software Installation
 The guide assumes you are on using Harvard Cannon. 
 
 
@@ -67,7 +68,7 @@ source: https://www.materialscloud.org/discover/2dstructures/dashboard/list
 ## Codes
 
 ## Test Case
-Test runs are in branch `example`. 
+Test runs are in branch `example_runs`. 
 
 ## Results
 

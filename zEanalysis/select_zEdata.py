@@ -18,7 +18,7 @@ try:
 except:
     print("One or more input arguments missing!")
 
-conf = SparkConf().setMaster('local[1]').setAppName('zE')
+conf = SparkConf().setMaster('local['+np+']').setAppName('zE')
 sqlContext = SQLContext(SparkContext())
 
 df_full = sqlContext.read.csv("zElist_organized.txt",header=True)

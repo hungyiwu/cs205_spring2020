@@ -1,18 +1,42 @@
 # Create VASP inputs files and combine monolayer TMDCs
 
+## Relaxation
+In this step, we sample 15 different interlayer spacings between bilayers in order to find the optimal positions between each pair of layers. The outputs generated include: 
+
+1. the list of optimal interlayer spacing `zoptlist.txt` 
+2. ground state energy vs. interlayer spacing  `zElist.txt` 
+3. Input parameters for phonopy calculations in folder `/phonopy_inputs`
+
+### Running the workflow
 To run the work flow, simply  do 
 
-`sbatch zscan.batch`, which runs 10 vasp calculations at different interlayer separations
+`sbatch zscan.batch`, which runs 15 vasp calculations at different interlayer separations
 After all relaxation calculations have finished, first extract the optimal interlayer separation and do a relaxation calculation at the optimal spacing, and copies the output structure and creates the INCAR for the force field calculation
 
 05/04/2020 note: !!! Now relax.py and vasp_out.py takes alignment as the input. Need to change both `zscan.batch` and `vasp_out.batch`
-`zscan.batch` contains:
 
-### General Workflow
+
+## Analyzing the output data
+
+To parse the output files and plot the results from `zElist.txt` and `zoptlist.txt`, run
+
+`spark-submit zEanalysis_spark.py`. 
+
+This particular script groups the materials by chalcogens. We use Spark to organize the data. A speedup test using Spark dataframe is contained in the folder `/zEanalysis`. To run a speedup test, do 
+
+`spark-submit select_zEdata.py <<metal>> <<chalcogen>> <<alignment>> <<np>>`.
+
+which save the data that contains the given metal, chalcogen, with the given alignment (0 degree or 180 degrees), and <<np>> is the number of cores to use. For example, 
+
+`spark-submit select_zEdata.py Mo S 0 4`
+
+
+
+## General Workflow
 0. Create different config files using the MultilayerSet class in `multilayer_config_generator.py`
 1. Combine different layers using the input in `config` and create VASP input files
 2. Run VASP multiple calculations at different interlayer separation files that allows ions to move in the z-direction to find optimal interlayer separations 
-3. Fit the ground state energy vs. the interlayer separation as a function of z to a parabolic function. Extract the optimal interlayer separation 
+3. Fit the ground state energy vs. the interlayer separation as a function of z to a parabolic function. This also generates two datasets: input files for calculation, stored in folder `phonopy_inputs/` and output files contained in `zElist.txt` and `zoptlist.txt`. `zElist.txt` provides a list of materials, 15 interlayer separations and the corresponding ground state energies; `zoptlist.txt` contains a list of materials and the fitted optimal interlayer separation. 
 4. Perform a relaxation calculation at the optimal interlayer spearation. Copy the geometry to `/phonopy_inputs/' folder 
 5. Copy the relaxed structure to `POSCAR-unit`, rewrite `INCAR-ff` for the force field calculation (same setting except for letting `NSW=1` for no ionic relaxation)
 
@@ -33,19 +57,19 @@ To construct config files, use the multilayer_config_generator.py file. Read cla
 
 To construct the structure, do
 
-`import vasp_cofig as vc`
+`import vasp_config as vc`
 
 `v = vc.Vasp_Config()` 
 
 To write `POSCAR`, `POTCAR`, `KPOINTS`, and `INCAR` do 
 
-`vc.POSCAR_writer()`
+`v.POSCAR_writer()`
 
-`vc.POTCAR_writer()`
+`v.POTCAR_writer()`
 
-`vc.KPOINTS_writer()`
+`v.KPOINTS_writer()`
 
-`vc.KPOINTS_writer(v.params)`
+`v.KPOINTS_writer(v.params)`
 
 Use and `params.config` from the phonopy pipeline to run initialize filepath, conda environment etc.
 
@@ -54,3 +78,4 @@ After the structure construction, perform a VASP calculation to allow out-of-pla
 After the relaxation calculation is finished, copy the relaxed structure in CONTCAR to POSCAR-unit.
 
 ### Note: need to adjust parameter `NPAR` or `NCORE` in `INCAR` depending on the number of cores used. Each run uses 4 cores by default. 
+

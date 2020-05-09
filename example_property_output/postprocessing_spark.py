@@ -1,3 +1,4 @@
+import os
 import pyspark
 from pyspark import SparkConf, SparkContext
 import glob
@@ -7,7 +8,7 @@ import numpy as np
 def band_structure_collection(directory):
     #load all band structure files in directory and organize them in an RDD labeled with filename
     sc = SparkContext(appName='SparkHDF5')
-    filenames = glob.glob('band*')
+    filenames = glob.glob(os.path.join(directory, 'band*'))
     filenames = sc.parallelize(filenames)
     files = filenames.map(lambda filename: (filename, band_structure(filename))) #creates (filename, (distance_array, frequency_matrix))
     return files

@@ -10,7 +10,7 @@ In this step, we sample 15 different interlayer spacings between bilayers (align
 ### Running the workflow
 To run the work flow, simply  do 
 
-`sbatch zscan.batch`, which runs 15 vasp calculations at different interlayer separations
+`sbatch zscan.batch`, which automatically runs 15 vasp calculations at different interlayer separations
 After all relaxation calculations have finished, first extract the optimal interlayer separation and do a relaxation calculation at the optimal spacing, and copies the output structure and creates the INCAR for the force field calculation
 
 05/04/2020 note: !!! Now relax.py and vasp_out.py takes alignment as the input. Need to change both `zscan.batch` and `vasp_out.batch`

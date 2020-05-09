@@ -27,11 +27,11 @@ To parse the output files and plot the results from `zElist.txt` and `zoptlist.t
 
 This particular script groups the materials by chalcogens. We use Spark to organize the data. A speedup test using Spark dataframe is contained in the folder `/zEanalysis`. To run a speedup test, do 
 
-`spark-submit select_zEdata.py <<metal>> <<chalcogen>> <<alignment>> <<np>>`.
+`<<spark-directory-on-Cannon>>//spark-2.2.0-bin-hadoop2.7/bin/spark-submit select_zEdata.py <<metal>> <<chalcogen>> <<alignment>> <<np>>`.
 
 which save the data that contains the given metal, chalcogen, with the given alignment (0 degree or 180 degrees), and <<np>> is the number of cores to use. For example, 
 
-`spark-submit select_zEdata.py Mo S 0 4`
+`<<spark-directory-on-Cannon>>//spark-2.2.0-bin-hadoop2.7/bin/spark-submit select_zEdata.py Mo S 0 4`
 
 
 ## General Workflow

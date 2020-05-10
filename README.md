@@ -109,8 +109,6 @@ source: https://www.materialscloud.org/discover/2dstructures/dashboard/list
 
 
 ## Code Descriptions
-## Description of Files 
-
 ### conda-env.yml
 Can be used to generate the proper conda environment for these calculations. On Cannon, first do `module load python`, and then `conda env create -f conda-env.yml`. The created environment will have the name `atomate_env`.
 

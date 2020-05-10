@@ -9,16 +9,16 @@ These 2D layered materials have become a favorite platform to manipulate their p
 
 TMDC is a type of 2D materials, whose unit cell is consisted of 1 transition metal (group 4 - group 12 in the periodic table) and 2 chalcogen atoms (S, Se, Te). The chalcogen atoms and the transition metal are not on the same vertical plane. It is a semiconductor with physical properties that are drastically different than graphene. Like graphene, it is a hexagonal lattice, but its inversion symmetry is broken. Below is a top view and side view of monolayer WTe2. 
 
-![tmdc mono](https://github.com/hywu0110/cs205_spring2020/blob/develop/results/geom/wse2_mono.png)
-![tmdc mono side](https://github.com/hywu0110/cs205_spring2020/blob/develop/results/geom/wse2_mono_side.png)
+![tmdc mono](https://github.com/hywu0110/cs205_spring2020/blob/develop/results/geom/wse2_mono.png | width=50)
+![tmdc mono side](https://github.com/hywu0110/cs205_spring2020/blob/develop/results/geom/wse2_mono_side.png |  width=50)
 
 Phonons are collective excitations in solids, which are long-ranged lattice vibrations from the equilibrium. Phonon modes are responsible of creating attractive interaction that mediate superconductivity according to BCS theory or Bardeen–Cooper–Schrieffer theory. Here is an example showing different normal modes of lattice vibration in a 1D chain. 
 
-![phonon](https://upload.wikimedia.org/wikipedia/commons/9/9b/1D_normal_modes_%28280_kB%29.gif) [Imgage source: Wikipedia] 
+![phonon](https://upload.wikimedia.org/wikipedia/commons/9/9b/1D_normal_modes_%28280_kB%29.gif |  width=100) [Imgage source: Wikipedia] 
 
 Similarly, here is a visualization of how phonon mode propages through a 2D solid: 
 
-![2Dphonon](https://github.com/hywu0110/cs205_spring2020/blob/develop/results/geom/400px-Lattice_wave.svg.png)
+![2Dphonon](https://github.com/hywu0110/cs205_spring2020/blob/develop/results/geom/400px-Lattice_wave.svg.png | width=100 )
 [Imgage source: Wikipedia] 
 
 

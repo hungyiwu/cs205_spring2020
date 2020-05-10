@@ -41,9 +41,22 @@ The guide assumes you are on using Harvard Cannon.
 - pymatgen
 - hdf5
 
-On Cannon, you can do: `module load python` and then `conda env create -f conda-env.yml`. 
+On Cannon, you can do: 
+```bash 
+module load python
+```
+and then
+```bash
+conda env create -f conda-env.yml
+```
+Note: modify `name` to change the conda environment name and chance the directory for `prefix` to your home directory
 
-2. Move to the `/inputs/` directory. Run the first portion of the pipeline (multilayer creation and relaxation) by doing: `sbatch zscan.batch`. The final outputs will be written to `/n/holyscratch01/cs205/group4/example-relax/`
+2. Move to the `/inputs/` directory. Before running to workflow, create two directories to store raw data from the vasp run 
+```bash 
+mkdir vasp_relax_test 
+mkdir vasp_relax 
+```
+Run the first portion of the pipeline (multilayer creation and relaxation) by doing: `sbatch zscan.batch`. The final outputs will be written to `/n/holyscratch01/cs205/group4/example-relax/`
 
 3. Run the second porition of the pipeline (phonopy and force field calculation) by doing: `sbatch preprocess.batch`. The final outputs will be written to `/n/holyscratch01/cs205/group4/example-ff/`.
 

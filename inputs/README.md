@@ -44,7 +44,8 @@ which save the data that contains the given metal, chalcogen, with the given ali
 0. Create different config files using the MultilayerSet class in `multilayer_config_generator.py`
 1. Combine different layers using the input in `config` and create VASP input files
 2. Run VASP multiple calculations at different interlayer separation files that allows ions to move in the z-direction to find optimal interlayer separations 
-3. Fit the ground state energy vs. the interlayer separation as a function of z to a parabolic function. This also generates two datasets: input files for calculation, stored in folder `phonopy_inputs/` and output files contained in `zElist.txt` and `zoptlist.txt`. `zElist.txt` provides a list of materials, 15 interlayer separations and the corresponding ground state energies; `zoptlist.txt` contains a list of materials and the fitted optimal interlayer separation. 
+3a. Fit the ground state energy vs. the interlayer separation as a function of z to a parabolic function. This also generates two datasets: input files for calculation, stored in folder `phonopy_inputs/` and output files contained in `zElist.txt` and `zoptlist.txt`. `zElist.txt` provides a list of materials, 15 interlayer separations and the corresponding ground state energies; `zoptlist.txt` contains a list of materials and the fitted optimal interlayer separation.
+3b. Use the RelaxedBilayerMultilayerSet class to collect optimal vertical separations and alignments from the initial VASP calculation output files and obtain more precisely relaxed trilayers.
 4. Perform a relaxation calculation at the optimal interlayer spearation. Copy the geometry to `/phonopy_inputs/' folder 
 5. Copy the relaxed structure to `POSCAR-unit`, rewrite `INCAR-ff` for the force field calculation (same setting except for letting `NSW=1` for no ionic relaxation)
 

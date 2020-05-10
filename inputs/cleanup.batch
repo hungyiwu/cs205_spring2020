@@ -16,5 +16,5 @@ source activate $CONDAENV_NAME
 
 module list
 
-python vasp_out.py 0 180
+python cleanup.py
 

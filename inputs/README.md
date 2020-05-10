@@ -169,7 +169,7 @@ Generates `.hdf5` files based on the output of the VASP force field calculation.
 ### postprocess.batch
 Runs `postprocess.py`.
 
-## Folder `/PPs`
+### Folder `/PPs`
 Contains pseudopotential files for different elements. `vasp_config.py` combines them into 1 `POSCAR` for different material combinations. 
 
 

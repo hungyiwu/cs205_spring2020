@@ -219,11 +219,11 @@ The central phonon calculations were done using VASP, a software package that is
 
 The Big Data applications of this project were ran using Spark. While Sparks multicore design can lead to considerable speedup, it can also result in needless overhead when the number of cores used is too great for the size of the data set evaluated. This is shown in the graphs below for optimized vertical spacing data processing for a data set of approximately 10 Mb. While execution time grows and speedup increases for 4 and fewer cores, performance actually suffers for larger numbers of cores, showing that the overhead has outweighted the efficiency of added processors.
 
-<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/Image from iOS.jpg" width="600">
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/spark_speedup.png" width="600">
 
 This same phenomena can be observed when using Spark to obtain band gap data from various output files. In the graph below, the performance of large numbers of cores (4 and 8) improves when the data set becomes large, showing markedly smaller execution times than the local, single core implementation. However, the 2 core implementation actually displays worse performance than the local version, as its multicore design introduces more overhead than its merely 2 core archetecture can remediate in actual speedup.
 
-<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/spark_speedup.png" width="600">
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/Image from iOS.jpg" width="600">
 
 ## References 
 VASP: https://www.vasp.at/

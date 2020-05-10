@@ -85,43 +85,43 @@ for f_master in fname:
 
         # submit another vasp run
         # create config file
-        #set = mcg.MultilayerSet(layer_number=[2], alignments=align, verticals=[0,zmin])
-        #set.config_writer()
-        #dir = set.multilayer_directory[1:]
-        #print(dir)
-        #fname = np.sort(set.fname)
+        set = mcg.MultilayerSet(layer_number=[2], alignments=align, verticals=[0,zmin])
+        set.config_writer()
+        dir = set.multilayer_directory[1:]
+        print(dir)
+        fname = np.sort(set.fname)
 
-        #for f in fname:
-        #    folder=f[7:]
-        #    if folder[0:len(pattern)] == pattern:
-        #        
-        #        if os.path.exists(os.getcwd()+vasp_dir_new+folder+'/CONTCAR'):
-        #            print("VASP run already done. Skip")
-        #        else:
-        #            os.makedirs(os.getcwd()+vasp_dir_new+folder, exist_ok = True)
-        #            copyfile(os.getcwd()+dir+f,os.getcwd()+vasp_dir_new+folder+"/config")
+        for f in fname:
+            folder=f[7:]
+            if folder[0:len(pattern)] == pattern:
+                
+                if os.path.exists(os.getcwd()+vasp_dir_new+folder+'/CONTCAR'):
+                    print("VASP run already done. Skip")
+                else:
+                    os.makedirs(os.getcwd()+vasp_dir_new+folder, exist_ok = True)
+                    copyfile(os.getcwd()+dir+f,os.getcwd()+vasp_dir_new+folder+"/config")
 
-        #            subdir = vasp_dir_new+folder
-        #            # print(subdir)
-        #            v = vc.Vasp_Config(target=os.getcwd()+subdir+"/config")
+                    subdir = vasp_dir_new+folder
+                    print(subdir)
+                    v = vc.Vasp_Config(target=os.getcwd()+subdir+"/config")
 
-        #            v.POSCAR_writer(subdir+"/POSCAR")
-        #            v.POTCAR_writer(subdir+"/POTCAR",subdir+"/POSCAR")
-        #            v.KPOINT_writer(subdir+"/KPOINTS")
-        #            params = v.params
-        #            params["ISIF"]=3
-        #            params["NPAR"]=2
-        #            params["NSW"]=2
-        #            v.INCAR_writer(v.params,subdir + "/INCAR")
+                    v.POSCAR_writer(subdir+"/POSCAR")
+                    v.POTCAR_writer(subdir+"/POTCAR",subdir+"/POSCAR")
+                    v.KPOINT_writer(subdir+"/KPOINTS")
+                    params = v.params
+                    params["ISIF"]=3
+                    params["NPAR"]=2
+                    params["NSW"]=2
+                    v.INCAR_writer(v.params,subdir + "/INCAR")
 
-        #            #print(subdir)
-        #            masterdir = os.getcwd()
-        #            #print(masterdir)
-        #            os.chdir(os.getcwd()+subdir)
-        #            copyfile(masterdir + '/bat_vasp', os.getcwd()+'/bat_vasp')
-        #            copyfile(masterdir + '/params.conf', os.getcwd()+'/params.conf')
-        #            os.system('sbatch bat_vasp')
-        #            os.chdir(masterdir)
+                    #print(subdir)
+                    masterdir = os.getcwd()
+                    #print(masterdir)
+                    os.chdir(os.getcwd()+subdir)
+                    copyfile(masterdir + '/bat_vasp', os.getcwd()+'/bat_vasp')
+                    copyfile(masterdir + '/params.conf', os.getcwd()+'/params.conf')
+                    os.system('sbatch bat_vasp')
+                    os.chdir(masterdir)
 
 # write to file
 f = open("zoptlist.txt", "a+")

@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=relax
+#SBATCH --job-name=vtest
 #SBATCH -n 4 # Number of cores requested
 #SBATCH -t 0-08:00 # Runtime in minutes
 #SBATCH -p kaxiras # Partition to submit to

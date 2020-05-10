@@ -11,6 +11,7 @@ import re
 from pymatgen.core.periodic_table import *
 
 plt.rcParams.update({'font.size': 22})
+fpath = "../results/"
 
 def parser(lines):
     type = line[0]
@@ -35,9 +36,13 @@ def parser(lines):
 
 
 try:
-    fpath = sys.argv[1]
+    chalcogen1 = sys.argv[1]
+    chalcogen2 = sys.argv[2]
+    align = sys.argv[3]
 except:
-    fpath = "../results/"
+    chalcogen1 = 'Te'
+    chalcogen2 = 'Te'
+    align = '0'
 
 # organize zElist
 f = open("zElist.txt","r")
@@ -80,9 +85,6 @@ df.persist()
 metal_l1=df_full.select("atom1_l1").distinct()
 metal_l2=df_full.select("atom1_l2").distinct()
 
-chalcogen1 = "Se"
-chalcogen2 = "S"
-align = "0"
 
 metal_l1_list = [x["atom1_l1"] for x in metal_l1.collect()]
 metal_l2_list = [x["atom1_l2"] for x in metal_l2.collect()]
@@ -142,7 +144,7 @@ metal1z=[metal_l1_list[x]+"("+str(Z1[x])+")" for x in range(len(Z1))]
 metal2z=[metal_l2_list[x]+"("+str(Z2[x])+")" for x in range(len(Z2))]
             
 plt.legend()
-plt.savefig(fpath+"E0_vs_z_"+chalcogen1+chalcogen2+".png")
+plt.savefig(fpath+"E0_vs_z_"+chalcogen1+chalcogen2+"_"+align+".png")
         
 fig=plt.figure(figsize=(20,15))
 im=plt.pcolormesh(E0)
@@ -152,7 +154,7 @@ plt.xticks(np.arange(len(metal_l2_list)), tuple(metal2z))
 plt.title("Chalcogen L1: " + chalcogen1 + ", Chalcogen L2: " + chalcogen2)
 plt.xlabel("Metal L1")
 plt.ylabel("Metal L2")
-plt.savefig(fpath+"E0_"+chalcogen1+chalcogen2+".png")
+plt.savefig(fpath+"E0_"+chalcogen1+chalcogen2+"_"+align+".png")
 
 fig=plt.figure(figsize=(20,15))
 im=plt.pcolormesh(z)
@@ -162,4 +164,4 @@ plt.xticks(np.arange(len(metal_l2_list)), tuple(metal2z))
 plt.title("Chalcogen L1: " + chalcogen1 + ", Chalcogen L2: " + chalcogen2)
 plt.xlabel("Metal L1")
 plt.ylabel("Metal L2")
-plt.savefig(fpath+"z_"+chalcogen1+chalcogen2+".png")
+plt.savefig(fpath+"z_"+chalcogen1+chalcogen2+"_"+align+".png")

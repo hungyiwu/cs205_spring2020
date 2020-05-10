@@ -17,7 +17,7 @@ NUMFASTQ=${#DIR[@]}
 # now subtract 1 as we have to use zero-based indexing (first cell is 0)
 ZBNUMFASTQ=$(($NUMFASTQ - 1))
 
-echo Number of runs: $ZBNUMFASTQ
+echo Number of runs: $NUMFASTQ
 
 # now submit to SLURM
 pwd

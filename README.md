@@ -30,7 +30,7 @@ For the phonon spectrum, we use the Python packge `phonopy`, which uses the forc
 
 Our projects involve both big compute and big data, combining both high-throughput and high-performance computing. For each DFT calculation, we are using distributed memory parallelism through MPI, and using thread-level parallelism by running multiple DFT calculations concurrently. Finally, we use Spark Dataframe to analyze the data.
 
-## Software Installation
+## Software Installation and Test Case 
 The guide assumes you are on using Harvard Cannon. 
 
 #### Steps to run, assuming you are setup on Cannon and have read/write access to `/n/holyscratch/cs205/group4`:
@@ -99,19 +99,84 @@ def generate_unitcell_POSCAR(formula, lattice_constant, template_POSCAR_file):
    `band_structure.hdf5 = run_phonopy_postprocessing(list_of_displacement_forcefield, band.conf)`  
    `DoS.hdf5 = run_phonopy_postprocessing(list_of_displacement_forcefield, mesh.conf)`
    
-7. Calculate properties of interest (TBD) using Spark
+7. Parse band gap results using Spark
 
-   Use Spark to do operations for all 90 million (?) band structures and DoS from step 6 and calculate properties of interest.
+   Parse band gap results from step 6 and perform speed-up assessment on the Spark script.
   
 ## List of 2D material
+
+We curated the input data by first querying the Material Project database for lattice dimension data (POSCAR files) containing only the elements of interest, and then filter them by a list of known 2D materials downloaded from the Material Cloud website.
 
 source: https://www.materialscloud.org/discover/2dstructures/dashboard/list
 
 
 ## Code Descriptions
+### conda-env.yml
+Can be used to generate the proper conda environment for these calculations. On Cannon, first do `module load python`, and then `conda env create -f conda-env.yml`. The created environment will have the name `atomate_env`.
 
-## Test Case
-Test runs are in branch `example_runs`. 
+### multilayer_config_generator.py
+#### MultilayerSet class
+Tool which takes all possible monolayer POSCAR files in specified directory and generates all possible multilayer POSCAR files with 1-5 layers in a specified directory.
+#### RelaxedBilayerMultilayerSet
+Tool which takes all relaxed bilayers in an output file and uses the optimized vertical separations and angles to generate all possible pre-optimized trilayers.
+
+### vasp_config.py
+tool to combine layers according to the `config` file
+
+### relax.py
+creates directories for all bilayer combinations at 15 interlayer separations to prepare for vasp runs
+
+### bat_vasp
+calls VASP executable in each subfolder for individual VASP runs
+
+### bat1_vasp
+calls VASP executable in each subfolder, in cases where relative directory for `vasp.std` is different than in `bat_vasp`.
+
+### relax_run.batch
+calls `bat_vasp` in individual subfolder created by `relax.py`
+
+### vasp_out.py
+post-processes the output from VASP, fit E0 vs. z and find the interlayer separation corresponding to the minimum ground energy, submit another VASP calculation to relax atoms to the optimal positions at the optimal z
+
+### vasp_out.batch
+Batch file to call `vasp_out.py`
+
+### cleanup.py:
+Collects data from the final VASP run created by `vasp_out.py` and creates phonopy configuration files. Stores all the input information in folder `/phonopy_inputs`
+
+### cleanup.batch
+runs `cleanup.py`
+
+### phonopy_params.conf
+Contains parameters for the phonopy calculation: `DIM`, `BAND`, `BAND_POINTS`, and `MP`. See phonopy documentation for details on these parameters.
+
+### phonopy_config_generator.py
+Given a bilayer configuration file, generates `band.conf` and `mesh.conf`, which are files necessary to post-process VASP force field calculations and generate data (in `.hdf5` format) on the phonon band structure.
+
+### preprocess.py
+Copies over results from VASP interlayer relaxation and makes sure all necessary input files for final VASP force field calculation are present.
+
+### preprocess.batch
+Runs `preprocess.py`, then calls batch script `forces.batch`.
+
+### forces_vasp.py
+Given a directory of directories, with each inner directory corresponding to a multilayer material:
+1. Generates phonopy displacement supercells (e.g. `POSCAR-001`)
+2. Runs force field VASP calculations on each phonopy displacement supercell.
+
+### forces.batch
+Runs `forces_vasp.py`, then calls batch script `postprocess.batch`.
+
+### postprocess.py
+Generates `.hdf5` files based on the output of the VASP force field calculation. Writes these files to `/n/holyscratch01/cs205/group4/example-ff/`
+
+### postprocess.batch
+Runs `postprocess.py`.
+
+### Folder `/PPs`
+Contains pseudopotential files for different elements. `vasp_config.py` combines them into 1 `POSCAR` for different material combinations. 
+
+
 
 ## Results
 
@@ -119,4 +184,5 @@ Test runs are in branch `example_runs`.
 
 ## References 
 VASP: https://www.vasp.at/
+
 Phonopy: https://phonopy.github.io/phonopy/index.html

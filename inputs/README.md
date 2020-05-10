@@ -25,9 +25,11 @@ After all relaxation calculations have finished, first extract the optimal inter
 To parse the output files and plot the results from `zElist.txt` and `zoptlist.txt`, run
 
 `<<spark-directory-on-Cannon>>//spark-2.2.0-bin-hadoop2.7/bin/spark-submit zEanalysis_spark.py`. This will generates three figures and save to the `results` folder
-![z_TeTe](https://github.com/hywu0110/cs205_spring2020/blob/inputs/results/z_TeTe.png)
-![E0_TeTe](https://github.com/hywu0110/cs205_spring2020/blob/inputs/results/E0_TeTe.png)
-![E0_vs_z_TeTe](https://github.com/hywu0110/cs205_spring2020/blob/inputs/results/E0_vs_z_TeTe.png)
+<p float="left">
+  <img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/z_TeTe.png" width=400>
+  <img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/E0_TeTe.png" width=400>
+</p>
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/E0_vs_z_TeTe.png" width=500>
 
 This particular script groups the materials by chalcogens. We use Spark to organize the data. A speedup test using Spark dataframe is contained in the folder `/zEanalysis`. To run a speedup test, do 
 

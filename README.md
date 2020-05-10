@@ -30,7 +30,7 @@ For the phonon spectrum, we use the Python packge `phonopy`, which uses the forc
 
 Our projects involve both big compute and big data, combining both high-throughput and high-performance computing. For each DFT calculation, we are using distributed memory parallelism through MPI, and using thread-level parallelism by running multiple DFT calculations concurrently. Finally, we use Spark Dataframe to analyze the data.
 
-## Software Installation
+## Software Installation and Test Case 
 The guide assumes you are on using Harvard Cannon. 
 
 #### Steps to run, assuming you are setup on Cannon and have read/write access to `/n/holyscratch/cs205/group4`:

@@ -150,6 +150,21 @@ Line 3: layer alignment with respect to the positive x axis (0 degree or 180 deg
 
 Line 4: Layer separation between this layer and the last layer. The separation is defined as the distance between the chalcogen atom of the layer ($\ell$-1) to the metal atom of the layer $\ell$
 
+An example `config` file looks like:
+``` 
+Mo S
+1 2
+0
+1
+
+W Se
+1 2 
+180
+5
+```
+This creates a MoS2 and WSe2 bilayer that are 180-degree aligned, separated by 5 Angstroms. Note that the interlayer separation is defined to be the distance from a chalcogen atom to the tetal atom.
+
+
 To construct config files, use the multilayer_config_generator.py file. Read class variables for specifics. See quickrunner.py for example run which combines TMDC_poscar monolayers into the multilayer permutations with repetition of up to 3 stacks in multilayer_TMDC_poscar.
 
 To construct the structure, do

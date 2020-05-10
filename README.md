@@ -97,3 +97,5 @@ Test runs are in branch `example_runs`.
 ## Performance Evaluation
 
 ## References 
+VASP: https://www.vasp.at/
+Phonopy: https://phonopy.github.io/phonopy/index.html

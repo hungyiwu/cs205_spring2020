@@ -95,6 +95,12 @@ v.INCAR_writer(v.params,subdir + "/INCAR")
 
 ## Description of Files 
 
+### multilayer_config_generator.py
+#### MultilayerSet class
+Tool which takes all possible monolayer POSCAR files in specified directory and generates all possible multilayer POSCAR files with 1-5 layers in a specified directory.
+#### RelaxedBilayerMultilayerSet
+Tool which takes all relaxed bilayers in an output file and uses the optimized vertical separations and angles to generate all possible pre-optimized trilayers.
+
 ### vasp_config.py
 tool to combine layers according to the `config` file
 

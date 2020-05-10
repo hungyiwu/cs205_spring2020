@@ -105,6 +105,8 @@ def generate_unitcell_POSCAR(formula, lattice_constant, template_POSCAR_file):
   
 ## List of 2D material
 
+We curated the input data by first querying the Material Project database for lattice dimension data (POSCAR files) containing only the elements of interest, and then filter them by a list of known 2D materials downloaded from the Material Cloud website.
+
 source: https://www.materialscloud.org/discover/2dstructures/dashboard/list
 
 

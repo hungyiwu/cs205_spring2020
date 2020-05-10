@@ -33,9 +33,7 @@ Our projects involve both big compute and big data, combining both high-throughp
 ## Software Installation
 The guide assumes you are on using Harvard Cannon. 
 
-### For details on the workflow and code descriptions, please see the README in the `develop` branch.
-
-### Steps to run, assuming you are setup on Cannon and have read/write access to `/n/holyscratch/cs205/group4`:
+#### Steps to run, assuming you are setup on Cannon and have read/write access to `/n/holyscratch/cs205/group4`:
 1. Set up a conda environment, which must minimally contain:
 - python
 - phonopy (from conda-forge)

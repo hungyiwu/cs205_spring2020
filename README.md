@@ -3,11 +3,18 @@
 
 ## Introduction
 Two-dimensional materials (2D) are a class of atomically thin materials. The most famous example is graphene, which is a hexagonal lattice. These 2D materials have a wide range of physical properties. For example, hexagonal Boron Nitrice (hBN) is an insulator and is commonly used as a substrate experiment; transitition metal dichalcogenides (TMDCs) such as MoS_2 are semiconductors. 
-These 2D layered materials have become a favorite platform to manipulate their physical properties. Recently, people have been exploring van der Waals (vdW) heterostructures, which refer to the layered assembilies of the 2D materials. They are mediated by long-range vdW interaction, and therefore are also called vdW heterostructures. The flexibility and available experimental control "knobs", such as the material combination, relative twist angle, displacement field, and magnetic field, make them an ideal platform to explore strongly correlated physics. For example, strongly correlated insulator states and unconventional superconductivity were observed in twisted bilayer graphene, whose microscopic origin remains a open question. In this project, we develop a workflow to systematically calculate the phonon of layered heterostructures, specifically multi-layered TMDCs. This serves as the first step to investigate the role that phonon plays in the correlated states. 
+These 2D layered materials have become a favorite platform to manipulate their physical properties. Recently, people have been exploring van der Waals (vdW) heterostructures, which refer to the layered assembilies of the 2D materials. They are mediated by long-range vdW interaction, and therefore are also called vdW heterostructures. The flexibility and available experimental control "knobs", such as the material combination, relative twist angle, displacement field, and magnetic field, make them an ideal platform to explore strongly correlated physics. For example, strongly correlated insulator states and unconventional superconductivity were observed in twisted bilayer graphene, whose microscopic origin remains an open question. In this project, we develop a workflow to systematically calculate the phonon of layered heterostructures, specifically multi-layered TMDCs. This serves as the first step to investigate the role that phonon plays in the correlated states. 
+
+![Periodic table](https://cdn.britannica.com/45/7445-050-CA28EA33/version-periodic-table-elements.jpg)
+
+TMDC is a type of 2D materials, whose unit cell is consisted of 1 transition metal (group 4 - group 12 in the periodic table) and 2 chalcogen atoms (S, Se, Te). The chalcogen atoms and the transition metal are not on the same vertical plane. It is a semiconductor with physical properties that are drastically different than graphene. Like graphene, it is a hexagonal lattice, but its inversion symmetry is broken. Below is a top view and side view of monolayer WTe2. 
+
+![tmdc mono](https://github.com/hywu0110/cs205_spring2020/blob/develop/results/geom/wse2_mono.png)
+![tmdc mono side](https://github.com/hywu0110/cs205_spring2020/blob/develop/results/geom/wse2_mono_side.png)
 
 Phonons are collective excitations in solids, which are long-ranged lattice vibrations from the equilibrium. Phonon modes are responsible of creating attractive interaction that mediate superconductivity according to BCS theory or Bardeen–Cooper–Schrieffer theory. Here is an example showing different normal modes of lattice vibration in a 1D chain. 
 
-![phonon](https://upload.wikimedia.org/wikipedia/commons/9/9b/1D_normal_modes_%28280_kB%29.gif)
+![phonon](https://upload.wikimedia.org/wikipedia/commons/9/9b/1D_normal_modes_%28280_kB%29.gif) [Imgage source: Wikipedia] 
 
 Similarly, here is a visualization of how phonon mode propages through a 2D solid: 
 
@@ -23,8 +30,6 @@ Since the layered-materials involve vdW interactions, which is long-ranged and n
 For the phonon spectrum, we use the Python packge `phonopy`, which uses the force field computed from DFT and use finite difference to calculate the phonon properties. 
 
 Our projects involve both big compute and big data, combining both high-throughput and high-performance computing. For each DFT calculation, we are using distributed memory parallelism through MPI, and using thread-level parallelism by running multiple DFT calculations concurrently. Finally, we use Spark Dataframe to analyze the data.
-
-![Periodic table](https://cdn.britannica.com/45/7445-050-CA28EA33/version-periodic-table-elements.jpg)
 
 ## Software Installation
 The guide assumes you are on using Harvard Cannon. 

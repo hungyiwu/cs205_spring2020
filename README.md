@@ -33,6 +33,27 @@ Our projects involve both big compute and big data, combining both high-throughp
 ## Software Installation
 The guide assumes you are on using Harvard Cannon. 
 
+#### Steps to run, assuming you are setup on Cannon and have read/write access to `/n/holyscratch/cs205/group4`:
+1. Set up a conda environment, which must minimally contain:
+- python
+- phonopy (from conda-forge)
+- h5py (from conda-forge)
+- pymatgen
+- hdf5
+
+On Cannon, you can do: `module load python` and then `conda env create -f conda-env.yml`. 
+
+2. Move to the `/inputs/` directory. Run the first portion of the pipeline (multilayer creation and relaxation) by doing: `sbatch zscan.batch`. The final outputs will be written to `/n/holyscratch01/cs205/group4/example-relax/`
+
+3. Run the second porition of the pipeline (phonopy and force field calculation) by doing: `sbatch preprocess.batch`. The final outputs will be written to `/n/holyscratch01/cs205/group4/example-ff/`.
+
+4. Examine the results with Spark code in the `/outputs/` directory. Since the VASP calculation in the first part can take a very long time, we have put an example output file for one material in the `/outputs/` directory, so that this code can be tested without waiting for the VASP calculations to finish. To run the Spark code, do (in `/outputs/`):
+- `module load jdk/10.0.1-fasrc01`
+- Download spark (e.g. by following instructions in the course guide: https://harvard-iacs.github.io/2020-CS205/lab/I9/guide/Guide_I9.pdf), or by doing: `sudo curl -O http://d3kbcqa49mib13.cloudfront.net/spark-2.2.0-bin-hadoop2.7.tgz` and then coping the `.tgz` file to the Cannon directory.
+- Unzip the `.tgz` file: `tar xvf spark-2.2.0-bin-hadoop2.7.tgz`
+- Run the example: `./spark-2.2.0-bin-hadoop2.7/bin/spark-submit example.py .`
+The output of this example will be the filename and the band gap of the material.
+
 
 ## Workflow
 

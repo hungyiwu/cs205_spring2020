@@ -202,7 +202,28 @@ We also see that optimized vertical stacking is a function of alignment angle. A
 <img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/z_SeSe.png" width="600">
 <img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/z_SeSe_180.png" width="600">
 
+The final products of our VASP calculations are phonon band structures (energy of states E vs wave vector k), density of states which is proportional to dE/dk (the density of states with a given energy value which is larger when the band structure is flatter). Below we have the band structure and corresponding density of states for WSe2.
+
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/bands_wse2_bi.png" width="600">
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/dos_wse2_bi.png" width="600">
+
+In addition to these features, we also see the presence of a band gap, or region between two groupings of bands where no state bands can cross. Below is a plot of the size of these band gaps for various TMDC bilayers.
+
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/samechalc_bg.png" width="600">
+
 ## Performance Evaluation
+
+The central phonon calculations were done using VASP, a software package that is based on MPI. The performance of MPI is heavily dependent of the number of nodes used, with more nodes being able to divide the work into smaller portions but also requiring more overhead, such as data sharing and message passing. Below is a plot for large scale VASP (MPI) calculations with various numbers of cores. The execution time decrease/speedup is linear until more than 25 cores is reached, at which point the speedup begins to slow.
+
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/samechalc_bg.png" width="600">
+
+The Big Data applications of this project were ran using Spark. While Sparks multicore design can lead to considerable speedup, it can also result in needless overhead when the number of cores used is too great for the size of the data set evaluated. This is shown in the graphs below for optimized vertical spacing data processing for a data set of approximately 10 Mb. While execution time grows and speedup increases for 4 and fewer cores, performance actually suffers for larger numbers of cores, showing that the overhead has outweighted the efficiency of added processors.
+
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/samechalc_bg.png" width="600">
+
+This same phenomena can be observed when using Spark to obtain band gap data from various output files. In the graph below, the performance of large numbers of cores (4 and 8) improves when the data set becomes large, showing markedly smaller execution times than the local, single core implementation. However, the 2 core implementation actually displays worse performance than the local version, as its multicore design introduces more overhead than its merely 2 core archetecture can remediate in actual speedup.
+
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/samechalc_bg.png" width="600">
 
 ## References 
 VASP: https://www.vasp.at/

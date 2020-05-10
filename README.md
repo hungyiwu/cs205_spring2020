@@ -194,8 +194,8 @@ Contains pseudopotential files for different elements. `vasp_config.py` combines
 The optimized vertical stacking height (optimized for lowest energy configuration) for numerous TMDCs was calculated. The general trend is that chalcogens with a larger atomic number (that is, larger atoms with more protons and electrons), have larger optimal vertical stacking heights. Below we have the graphs of various TMDCs, each of which contain a common chalcogen, in order of increasing atomic number, S, Se, Te.
 
 <img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/z_SS.png" width="600">
-<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/z_SS.png" width="600">
-<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/z_SS.png" width="600">
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/z_SeSe.png" width="600">
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/z_TeTe.png" width="600">
 
 ## Performance Evaluation
 

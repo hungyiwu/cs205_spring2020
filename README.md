@@ -251,6 +251,10 @@ Contains pseudopotential files for different elements. `vasp_config.py` combines
 
 
 ## Results
+Our results for optimal interlayer separation are based on ~5500 VASP calculations for 0-degree bilayers and ~1500 for 180-degree bilayers. 
+
+Our results show that the optimal interlayer separation varies drastically depending on the element composition. A larger atomic number results in a smaller interlayer separation. 
+
 
 ## Performance Evaluation
 

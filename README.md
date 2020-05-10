@@ -56,11 +56,7 @@ Note: modify `name` to change the conda environment name and chance the director
 mkdir vasp_relax_test 
 mkdir vasp_relax 
 ```
-Run the first portion of the pipeline (multilayer creation and relaxation) by doing: 
-```bash 
-sbatch zscan.batch
-```
-This will create 15 VASP calculations in folder `/vasp_relax_test`, and extract the data from this folder, create a final VASP calculation based on the optimal interlayer spacing in folder `/vasp_relax`, and generate output for phonon calculations. The final outputs will be written to `/n/holyscratch01/cs205/group4/example-relax/`
+Run the first portion of the pipeline (multilayer creation and relaxation) by doing: `sbatch zscan.batch`. The final outputs will be written to `/n/holyscratch01/cs205/group4/example-relax/`
 
 3. Run the second porition of the pipeline (phonopy and force field calculation) by doing: `sbatch preprocess.batch`. The final outputs will be written to `/n/holyscratch01/cs205/group4/example-ff/`.
 
@@ -138,63 +134,7 @@ Tool which takes all possible monolayer POSCAR files in specified directory and 
 Tool which takes all relaxed bilayers in an output file and uses the optimized vertical separations and angles to generate all possible pre-optimized trilayers.
 
 ### vasp_config.py
-tool to combine layers according to the `config` file.
-#### Default  `config` file format: 
-Each layer has four lines. 
-
-Line 1: elements (order: metal, chalcogen)
-
-Line 2: number of atoms corresponding to the element above 
-
-Line 3: layer alignment with respect to the positive x axis (0 degree or 180 degrees, or equivalently, alignment or anti-alignment)
-
-Line 4: Layer separation between this layer and the last layer. The separation is defined as the distance between the chalcogen atom of the layer ($\ell$-1) to the metal atom of the layer $\ell$
-
-An example `config` file looks like:
-``` 
-Mo S
-1 2
-0
-1
-
-W Se
-1 2 
-180
-5
-```
-This creates a MoS2 and WSe2 bilayer that are 180-degree aligned, separated by 5 Angstroms. Note that the interlayer separation is defined to be the distance from a chalcogen atom to the tetal atom.
-
-
-To construct config files, use the multilayer_config_generator.py file. Read class variables for specifics. See quickrunner.py for example run which combines TMDC_poscar monolayers into the multilayer permutations with repetition of up to 3 stacks in multilayer_TMDC_poscar.
-
-To construct the structure, do
-
-```python
-import vasp_config as vc
-v = vc.Vasp_Config(target='config')
-```
-
-To write `POSCAR`, `POTCAR`, `KPOINTS`, and `INCAR` do 
-```python
-v.POSCAR_writer()
-v.POTCAR_writer()
-v.KPOINTS_writer()
-v.KPOINTS_writer(v.params)
-```
-
-Use and `params.config` from the phonopy pipeline to run initialize filepath, conda environment etc.
-
-After the structure construction, perform a VASP calculation to allow out-of-plane relaxation.
-
-After the relaxation calculation is finished, copy the relaxed structure in CONTCAR to POSCAR-unit.
-
-####Note: need to adjust parameter `NPAR` or `NCORE` in `INCAR` depending on the number of cores used. Each run uses 4 cores by default. Set `NPAR=SQRT(NCORES)`for optimal performance. To set input parameters in `INCAR`, do
-
-```python 
-paramas=v.params
-params["NSW"]=2
-v.INCAR_writer(v.params,subdir + "/INCAR")
-```
+tool to combine layers according to the `config` file
 
 ### relax.py
 creates directories for all bilayer combinations at 15 interlayer separations to prepare for vasp runs
@@ -249,12 +189,11 @@ Runs `postprocess.py`.
 ### Folder `/PPs`
 Contains pseudopotential files for different elements. `vasp_config.py` combines them into 1 `POSCAR` for different material combinations. 
 
-
 ## Results
-Our results for optimal interlayer separation are based on ~5500 VASP calculations for 0-degree bilayers and ~1500 for 180-degree bilayers. 
 
-Our results show that the optimal interlayer separation varies drastically depending on the element composition. A larger atomic number results in a smaller interlayer separation. 
+The optimized vertical stacking height (optimized for lowest energy configuration) for numerous TMDCs was calculated. The general trend is that chalcogens with a larger atomic number (that is, larger atoms with more protons and electrons), have larger optimal vertical stacking heights. Below we have the graphs of various TMDCs, each of which contain a common chalcogen, in order of increasing atomic number, S, Se, Te.
 
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/z_SS.png" width="250">
 
 ## Performance Evaluation
 

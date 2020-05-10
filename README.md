@@ -99,9 +99,9 @@ def generate_unitcell_POSCAR(formula, lattice_constant, template_POSCAR_file):
    `band_structure.hdf5 = run_phonopy_postprocessing(list_of_displacement_forcefield, band.conf)`  
    `DoS.hdf5 = run_phonopy_postprocessing(list_of_displacement_forcefield, mesh.conf)`
    
-7. Calculate properties of interest (TBD) using Spark
+7. Parse band gap results using Spark
 
-   Use Spark to do operations for all 90 million (?) band structures and DoS from step 6 and calculate properties of interest.
+   Parse band gap results from step 6 and perform speed-up assessment on the Spark script.
   
 ## List of 2D material
 

@@ -128,9 +128,12 @@ source: https://www.materialscloud.org/discover/2dstructures/dashboard/list
 To parse the output files and plot the results from `zElist.txt` and `zoptlist.txt`, run
 
 `<<spark-directory-on-Cannon>>//spark-2.2.0-bin-hadoop2.7/bin/spark-submit zEanalysis_spark.py`. This will generates three figures and   save to the `results` folder
-![z_TeTe](https://github.com/hywu0110/cs205_spring2020/blob/develop/results/z_TeTe.png)
-![E0_TeTe](https://github.com/hywu0110/cs205_spring2020/blob/develop/results/E0_TeTe.png)
-![E0_vs_z_TeTe](https://github.com/hywu0110/cs205_spring2020/blob/develop/results/E0_vs_z_TeTe.png)
+
+<p float="left">
+  <img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/z_TeTe.png" width="400">
+  <img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/E0_TeTe.png" width="400">
+</p>
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/E0_vs_z_TeTe.png" width="400">
 
 This particular script groups the materials by chalcogens. We use Spark to organize the data. A speedup test using Spark dataframe is    contained in the folder `/zEanalysis`. To run a speedup test, do  
 
@@ -224,11 +227,11 @@ We also see that optimized vertical stacking is a function of alignment angle. A
 
 The final products of our VASP calculations are phonon band structures (energy of states E vs wave vector k), density of states which is proportional to dE/dk (the density of states with a given energy value which is larger when the band structure is flatter). Below we have the band structure and corresponding density of states for WSe2.
 
+
 <p float="left">
-  <img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/bands_wse2_bi.png" height="400">
+    <img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/bands_wse2_bi.png" height="400">
 <img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/dos_wse2_bi.png" height="400">
 </p>
-
 
 
 In addition to these features, we also see the presence of a band gap, or region between two groupings of bands where no state bands can cross. Below is a plot of the size of these band gaps for various TMDC bilayers.

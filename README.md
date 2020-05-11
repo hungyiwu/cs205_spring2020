@@ -34,11 +34,6 @@ Our projects involve both big compute and big data, combining both high-throughp
 The guide assumes you are on using Harvard Cannon. 
 
 
-#### Before you start 
-- Make a conda environment with `conda-env.yml`.
-- Edit `params.config` to change the conda environment name 
-- Make sure `vasp.std` is in this folder. You can copy it from `/n/holyscratch01/cs205/group4/vasp.std`
-- Confirm that Python package `pymatgen` is installed in the active environment.
 
 #### Steps to run, assuming you are setup on Cannon and have read/write access to `/n/holyscratch/cs205/group4`:
 1. Set up a conda environment, which must minimally contain:
@@ -58,7 +53,14 @@ conda env create -f conda-env.yml
 ```
 Note: modify `name` to change the conda environment name and chance the directory for `prefix` to your home directory
 
-2. Move to the `/inputs/` directory. Before running to workflow, create two directories to store raw data from the vasp run 
+2. Move to the `/inputs/` directory.
+
+#### Before you start 
+- Edit `params.config` to change the conda environment name 
+- Make sure `vasp.std` is in this folder. You can copy it from `/n/holyscratch01/cs205/group4/vasp.std`
+- Confirm that Python package `pymatgen` is installed in the active environment.
+
+Before running to workflow, create two directories to store raw data from the vasp run 
 ```bash 
 mkdir vasp_relax_test 
 mkdir vasp_relax 

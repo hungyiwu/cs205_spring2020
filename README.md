@@ -257,9 +257,11 @@ The optimized vertical stacking height (optimized for lowest energy configuratio
 <img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/z_TeTe.png" width="400">
 
 We also see that optimized vertical stacking is a function of alignment angle. Anti-aligned (180 degrees) bilayers have shorter stacking distances than aligned (0 degrees) structures. This is due to less overlap between structures with similar electronic configurations (i.e. identical atoms overlapped on top of one another can be thought to "repel", raising the energy levels). Below we have aligned and anti-aligned bilayers with Se chalcogens that display this tendency.
+#### Aligned: 
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/z_SeSe.png" width="500">
 
-<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/z_SeSe.png" width="600">
-<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/z_SeSe_180.png" width="600">
+#### Anti-aligned
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/z_SeSe_180.png" width="500">
 
 The final products of our VASP calculations are phonon band structures (energy of states E vs wave vector k), density of states which is proportional to dE/dk (the density of states with a given energy value which is larger when the band structure is flatter). Below we have the band structure and corresponding density of states for WSe2.
 
@@ -288,7 +290,8 @@ This same phenomena can be observed when using Spark to obtain band gap data fro
 
 <img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/Image from iOS.jpg" width="600">
 
-## References 
+## Benchmark and Conclusion
+Finally, we compared our obtained band structure for bilayers to the known results in [[6]](#6) and we observe similar band structures as their Fig. 2. However, the systematic study of multi-layered 2D vdW heterostructures has not been performed, which makes our project a valuable addition to the study of vdW heterostructures. For future directions, a more exhaustive exploration to explore the parameter space of material combination is needed, such as including three or more layesr, which would require more computing resources. 
 
 ## References 
 <a id="1">[1]</a> 
@@ -307,5 +310,3 @@ Atsushi Togo and Isao Tanaka, "First principles phonon calculations in materials
 https://phonopy.github.io/phonopy/index.html
 <a id="1">[6]</a> 
 Zhang, Xin, et al. "Phonon and Raman scattering of two-dimensional transition metal dichalcogenides from monolayer, multilayer to bulk material." Chemical Society Reviews 44.9 (2015): 2757-2785.
-
-Phonopy: https://phonopy.github.io/phonopy/index.html

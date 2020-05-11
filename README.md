@@ -259,6 +259,7 @@ The optimized vertical stacking height (optimized for lowest energy configuratio
 We also see that optimized vertical stacking is a function of alignment angle. Anti-aligned (180 degrees) bilayers have shorter stacking distances than aligned (0 degrees) structures. This is due to less overlap between structures with similar electronic configurations (i.e. identical atoms overlapped on top of one another can be thought to "repel", raising the energy levels). Below we have aligned and anti-aligned bilayers with Se chalcogens that display this tendency.
 #### Aligned: 
 <img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/z_SeSe.png" width="500">
+
 #### Anti-aligned
 <img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/z_SeSe_180.png" width="500">
 

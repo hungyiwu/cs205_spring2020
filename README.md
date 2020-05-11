@@ -37,7 +37,7 @@ The guide assumes you are on using Harvard Cannon.
 #### Before you start 
 - Make a conda environment with `conda-env.yml`.
 - Edit `params.config` to change the conda environment name 
-- Make sure `vasp.std` is in this folder
+- Make sure `vasp.std` is in this folder. You can copy it from `/n/holyscratch01/cs205/group4/vasp.std`
 - Confirm that Python package `pymatgen` is installed in the active environment.
 
 #### Steps to run, assuming you are setup on Cannon and have read/write access to `/n/holyscratch/cs205/group4`:

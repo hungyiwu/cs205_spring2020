@@ -9,8 +9,8 @@ These 2D layered materials have become a favorite platform to manipulate their p
 
 TMDC is a type of 2D materials, whose unit cell is consisted of 1 transition metal (group 4 - group 12 in the periodic table) and 2 chalcogen atoms (S, Se, Te). The chalcogen atoms and the transition metal are not on the same vertical plane. It is a semiconductor with physical properties that are drastically different than graphene. Like graphene, it is a hexagonal lattice, but its inversion symmetry is broken. Below is a top view and side view of monolayer WTe2. 
 
-<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/geom/wse2_mono.png" width="200">
-<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/geom/wse2_mono_side.png" width="200">
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/master/results/geom/wse2_mono.png" width="200">
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/master/results/geom/wse2_mono_side.png" width="200">
 
 
 Phonons are collective excitations in solids, which are long-ranged lattice vibrations from the equilibrium. Phonon modes are responsible of creating attractive interaction that mediate superconductivity according to BCS theory or Bardeen–Cooper–Schrieffer theory. Here is an example showing different normal modes of lattice vibration in a 1D chain. 
@@ -19,7 +19,7 @@ Phonons are collective excitations in solids, which are long-ranged lattice vibr
 
 Similarly, here is a visualization of how phonon mode propages through a 2D solid: 
 
-<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/geom/400px-Lattice_wave.svg.png" width="250">
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/master/results/geom/400px-Lattice_wave.svg.png" width="250">
 [Imgage source: Wikipedia] 
 
 Our calculations are based on Density Functional Theory (DFT), which is first-principles quantum mechanical model that computes electronic properties by solving the Scrhodinger's equation. Instead of using the full many-body wave function as the basis, it uses the electron density as the basis. According to Kohn-Sham theory, there is an one-to-one correspondence between the many-body wavefunction to electron density. This turns the many-body Schrodinger's equation to a so-called "Kohn-Sham Hamiltonian" that only involves electron density. The "Kohn-Sham Hamiltonian" is exact, with unknown exchange-correlation functionals. In our project, we use a commercial DFT Vienna Ab initio Simulation Package (VASP) [[3]](#3).
@@ -168,10 +168,10 @@ To parse the output files and plot the results from `zElist.txt` and `zoptlist.t
 `<<spark-directory-on-Cannon>>//spark-2.2.0-bin-hadoop2.7/bin/spark-submit zEanalysis_spark.py`. This will generates three figures and   save to the `results` folder
 
 <p float="left">
-  <img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/z_TeTe.png" width="400">
-  <img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/E0_TeTe.png" width="400">
+  <img src="https://github.com/hywu0110/cs205_spring2020/blob/master/results/z_TeTe.png" width="400">
+  <img src="https://github.com/hywu0110/cs205_spring2020/blob/master/results/E0_TeTe.png" width="400">
 </p>
-<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/E0_vs_z_TeTe.png" width="400">
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/master/results/E0_vs_z_TeTe.png" width="400">
 
 This particular script groups the materials by chalcogens. We use Spark to organize the data. A speedup test using Spark dataframe is    contained in the folder `/zEanalysis`. To run a speedup test, do  
 
@@ -262,44 +262,44 @@ Contains pseudopotential files for different elements. `vasp_config.py` combines
 The optimized vertical stacking height (optimized for lowest energy configuration) for numerous TMDCs was calculated. The general trend is that chalcogens with a larger atomic number (that is, larger atoms with more protons and electrons), have larger optimal vertical stacking heights. Below we have the graphs of various TMDCs, each of which contain a common chalcogen, in order of increasing atomic number, S, Se, Te.
 
 <p float="left">
-  <img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/z_SS.png" width="400">
-   <img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/z_SeSe.png" width="400">
+  <img src="https://github.com/hywu0110/cs205_spring2020/blob/master/results/z_SS.png" width="400">
+   <img src="https://github.com/hywu0110/cs205_spring2020/blob/master/results/z_SeSe.png" width="400">
 </p>
-<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/z_TeTe.png" width="400">
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/master/results/z_TeTe.png" width="400">
 
 We also see that optimized vertical stacking is a function of alignment angle. Anti-aligned (180 degrees) bilayers have shorter stacking distances than aligned (0 degrees) structures. This is due to less overlap between structures with similar electronic configurations (i.e. identical atoms overlapped on top of one another can be thought to "repel", raising the energy levels). Below we have aligned and anti-aligned bilayers with Se chalcogens that display this tendency.
 #### Aligned: 
-<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/z_SeSe.png" width="500">
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/master/results/z_SeSe.png" width="500">
 
 #### Anti-aligned
-<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/z_SeSe_180.png" width="500">
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/master/results/z_SeSe_180.png" width="500">
 
 The final products of our VASP calculations are phonon band structures (energy of states E vs wave vector k), density of states which is proportional to dE/dk (the density of states with a given energy value which is larger when the band structure is flatter). Below we have the band structure and corresponding density of states for WSe2.
 
 
 <p float="left">
-    <img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/bands_wse2_bi.png" height="400">
-<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/dos_wse2_bi.png" height="400">
+    <img src="https://github.com/hywu0110/cs205_spring2020/blob/master/results/bands_wse2_bi.png" height="400">
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/master/results/dos_wse2_bi.png" height="400">
 </p>
 
 
 In addition to these features, we also see the presence of a band gap, or region between two groupings of bands where no state bands can cross. Below is a plot of the size of these band gaps for various TMDC bilayers.
 
-<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/samechalc_bg.png" width="600">
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/master/results/samechalc_bg.png" width="600">
 
 ## Performance Evaluation
 
 The central phonon calculations were done using VASP, a software package that is based on MPI. The performance of MPI is heavily dependent of the number of nodes used, with more nodes being able to divide the work into smaller portions but also requiring more overhead, such as data sharing and message passing. Below is a plot for large scale VASP (MPI) calculations with various numbers of cores. The execution time decrease/speedup is linear until more than 25 cores is reached, at which point the speedup begins to slow.
 
-<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/speedup.png" width="600">
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/master/results/speedup.png" width="600">
 
 The Big Data applications of this project were ran using Spark. While Sparks multicore design can lead to considerable speedup, it can also result in needless overhead when the number of cores used is too great for the size of the data set evaluated. This is shown in the graphs below for optimized vertical spacing data processing for a data set of approximately 10 Mb. While execution time grows and speedup increases for 4 and fewer cores, performance actually suffers for larger numbers of cores, showing that the overhead has outweighted the efficiency of added processors.
 
-<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/spark_speedup.png" width="600">
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/master/results/spark_speedup.png" width="600">
 
 This same phenomena can be observed when using Spark to obtain band gap data from various output files. In the graph below, the performance of large numbers of cores (4 and 8) improves when the data set becomes large, showing markedly smaller execution times than the local, single core implementation. However, the 2 core implementation actually displays worse performance than the local version, as its multicore design introduces more overhead than its merely 2 core archetecture can remediate in actual speedup.
 
-<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/Image from iOS.jpg" width="600">
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/master/results/Image from iOS.jpg" width="600">
 
 ## Benchmark and Conclusion
 Finally, we compared our obtained band structure for bilayers to the known results in [[6]](#6) and we observe similar band structures as their Fig. 2. However, the systematic study of multi-layered 2D vdW heterostructures has not been performed, which makes our project a valuable addition to the study of vdW heterostructures. For future directions, a more exhaustive exploration to explore the parameter space of material combination is needed, such as including three or more layesr, which would require more computing resources. 

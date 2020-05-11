@@ -41,9 +41,28 @@ The guide assumes you are on using Harvard Cannon.
 - pymatgen
 - hdf5
 
+<<<<<<< HEAD
 On Cannon, you can do: `module load python` and then `conda env create -f conda-env.yml`. 
 
 2. Move to the `/inputs/` directory. Run the first portion of the pipeline (multilayer creation and relaxation) by doing: `sbatch zscan.batch`. The final outputs will be written to `/n/holyscratch01/cs205/group4/example-relax/`
+=======
+On Cannon, you can do: 
+```bash 
+module load python
+```
+and then
+```bash
+conda env create -f conda-env.yml
+```
+Note: modify `name` to change the conda environment name and chance the directory for `prefix` to your home directory
+
+2. Move to the `/inputs/` directory. Before running to workflow, create two directories to store raw data from the vasp run 
+```bash 
+mkdir vasp_relax_test 
+mkdir vasp_relax 
+```
+Run the first portion of the pipeline (multilayer creation and relaxation) by doing: `sbatch zscan.batch`. The final outputs will be written to `/n/holyscratch01/cs205/group4/example-relax/`
+>>>>>>> 7557149241be48ae4bbe481c4053828f089ae2d2
 
 3. Run the second porition of the pipeline (phonopy and force field calculation) by doing: `sbatch preprocess.batch`. The final outputs will be written to `/n/holyscratch01/cs205/group4/example-ff/`.
 
@@ -99,12 +118,23 @@ def generate_unitcell_POSCAR(formula, lattice_constant, template_POSCAR_file):
    `band_structure.hdf5 = run_phonopy_postprocessing(list_of_displacement_forcefield, band.conf)`  
    `DoS.hdf5 = run_phonopy_postprocessing(list_of_displacement_forcefield, mesh.conf)`
    
+<<<<<<< HEAD
 7. Calculate properties of interest (TBD) using Spark
 
    Use Spark to do operations for all 90 million (?) band structures and DoS from step 6 and calculate properties of interest.
   
 ## List of 2D material
 
+=======
+7. Parse band gap results using Spark
+
+   Parse band gap results from step 6 and perform speed-up assessment on the Spark script.
+  
+## List of 2D material
+
+We curated the input data by first querying the Material Project database for lattice dimension data (POSCAR files) containing only the elements of interest, and then filter them by a list of known 2D materials downloaded from the Material Cloud website.
+
+>>>>>>> 7557149241be48ae4bbe481c4053828f089ae2d2
 source: https://www.materialscloud.org/discover/2dstructures/dashboard/list
 
 
@@ -174,12 +204,51 @@ Runs `postprocess.py`.
 ### Folder `/PPs`
 Contains pseudopotential files for different elements. `vasp_config.py` combines them into 1 `POSCAR` for different material combinations. 
 
+<<<<<<< HEAD
 
 
 ## Results
 
 ## Performance Evaluation
 
+=======
+## Results
+
+The optimized vertical stacking height (optimized for lowest energy configuration) for numerous TMDCs was calculated. The general trend is that chalcogens with a larger atomic number (that is, larger atoms with more protons and electrons), have larger optimal vertical stacking heights. Below we have the graphs of various TMDCs, each of which contain a common chalcogen, in order of increasing atomic number, S, Se, Te.
+
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/z_SS.png" width="600">
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/z_SeSe.png" width="600">
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/z_TeTe.png" width="600">
+
+We also see that optimized vertical stacking is a function of alignment angle. Anti-aligned (180 degrees) bilayers have shorter stacking distances than aligned (0 degrees) structures. This is due to less overlap between structures with similar electronic configurations (i.e. identical atoms overlapped on top of one another can be thought to "repel", raising the energy levels). Below we have aligned and anti-aligned bilayers with Se chalcogens that display this tendency.
+
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/z_SeSe.png" width="600">
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/z_SeSe_180.png" width="600">
+
+The final products of our VASP calculations are phonon band structures (energy of states E vs wave vector k), density of states which is proportional to dE/dk (the density of states with a given energy value which is larger when the band structure is flatter). Below we have the band structure and corresponding density of states for WSe2.
+
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/bands_wse2_bi.png" width="400">
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/dos_wse2_bi.png" width="200">
+
+In addition to these features, we also see the presence of a band gap, or region between two groupings of bands where no state bands can cross. Below is a plot of the size of these band gaps for various TMDC bilayers.
+
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/samechalc_bg.png" width="600">
+
+## Performance Evaluation
+
+The central phonon calculations were done using VASP, a software package that is based on MPI. The performance of MPI is heavily dependent of the number of nodes used, with more nodes being able to divide the work into smaller portions but also requiring more overhead, such as data sharing and message passing. Below is a plot for large scale VASP (MPI) calculations with various numbers of cores. The execution time decrease/speedup is linear until more than 25 cores is reached, at which point the speedup begins to slow.
+
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/speedup.png" width="600">
+
+The Big Data applications of this project were ran using Spark. While Sparks multicore design can lead to considerable speedup, it can also result in needless overhead when the number of cores used is too great for the size of the data set evaluated. This is shown in the graphs below for optimized vertical spacing data processing for a data set of approximately 10 Mb. While execution time grows and speedup increases for 4 and fewer cores, performance actually suffers for larger numbers of cores, showing that the overhead has outweighted the efficiency of added processors.
+
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/spark_speedup.png" width="600">
+
+This same phenomena can be observed when using Spark to obtain band gap data from various output files. In the graph below, the performance of large numbers of cores (4 and 8) improves when the data set becomes large, showing markedly smaller execution times than the local, single core implementation. However, the 2 core implementation actually displays worse performance than the local version, as its multicore design introduces more overhead than its merely 2 core archetecture can remediate in actual speedup.
+
+<img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/Image from iOS.jpg" width="600">
+
+>>>>>>> 7557149241be48ae4bbe481c4053828f089ae2d2
 ## References 
 VASP: https://www.vasp.at/
 

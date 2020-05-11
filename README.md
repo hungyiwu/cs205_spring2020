@@ -177,7 +177,7 @@ This particular script groups the materials by chalcogens. We use Spark to organ
 
 `<<spark-directory-on-Cannon>>//spark-2.2.0-bin-hadoop2.7/bin/spark-submit select_zEdata.py <<metal>> <<chalcogen>> <<alignment>>        <<np>>`.
 
-which save the data that contains the given metal, chalcogen, with the given alignment (0 degree or 180 degrees), and <<np>> is the      number of cores to use. For example,  
+which save the data that contains the given metal, chalcogen, with the given alignment (0 degree or 180 degrees), and `<<np>>` is the      number of cores to use. For example,  
 
 `<<spark-directory-on-Cannon>>//spark-2.2.0-bin-hadoop2.7/bin/spark-submit select_zEdata.py Mo S 0 4`
 

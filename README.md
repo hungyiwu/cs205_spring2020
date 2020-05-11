@@ -72,10 +72,21 @@ This will create 15 VASP calculations in folder `/vasp_relax_test`, and extract 
 3. Run the second porition of the pipeline (phonopy and force field calculation) by doing: `sbatch preprocess.batch`. The final outputs will be written to `/n/holyscratch01/cs205/group4/example-ff/`.
 
 4. Examine the results with Spark code in the `/outputs/` directory. Since the VASP calculation in the first part can take a very long time, we have put an example output file for one material in the `/outputs/` directory, so that this code can be tested without waiting for the VASP calculations to finish. To run the Spark code, do (in `/outputs/`):
-- `module load jdk/10.0.1-fasrc01`
-- Download spark (e.g. by following instructions in the course guide: https://harvard-iacs.github.io/2020-CS205/lab/I9/guide/Guide_I9.pdf), or by doing: `sudo curl -O http://d3kbcqa49mib13.cloudfront.net/spark-2.2.0-bin-hadoop2.7.tgz` and then coping the `.tgz` file to the Cannon directory.
-- Unzip the `.tgz` file: `tar xvf spark-2.2.0-bin-hadoop2.7.tgz`
-- Run the example: `./spark-2.2.0-bin-hadoop2.7/bin/spark-submit example.py .`
+```bash
+module load jdk/10.0.1-fasrc01
+```
+Then, download spark (e.g. by following instructions in the course guide: https://harvard-iacs.github.io/2020-CS205/lab/I9/guide/Guide_I9.pdf), or by doing: 
+```bash
+sudo curl -O http://d3kbcqa49mib13.cloudfront.net/spark-2.2.0-bin-hadoop2.7.tgz
+```
+and then copying the `.tgz` file to the Cannon directory. Then, unzip the `.tgz` file: 
+```bash
+tar xvf spark-2.2.0-bin-hadoop2.7.tgz
+```
+Finally, run the example: 
+```bash
+./spark-2.2.0-bin-hadoop2.7/bin/spark-submit example.py .
+```
 The output of this example will be the filename and the band gap of the material.
 
 

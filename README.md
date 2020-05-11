@@ -305,8 +305,10 @@ VASP: https://www.vasp.at/
 
 <a id="1">[4]</a> 
 Peng, Haowei, et al. "Versatile van der Waals density functional based on a meta-generalized gradient approximation." Physical Review X 6.4 (2016): 041005.
+
 <a id="1">[5]</a> 
 Atsushi Togo and Isao Tanaka, "First principles phonon calculations in materials science", Scr. Mater., 108, 1-5 (2015)
 https://phonopy.github.io/phonopy/index.html
+
 <a id="1">[6]</a> 
 Zhang, Xin, et al. "Phonon and Raman scattering of two-dimensional transition metal dichalcogenides from monolayer, multilayer to bulk material." Chemical Society Reviews 44.9 (2015): 2757-2785.

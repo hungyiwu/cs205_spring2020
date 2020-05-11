@@ -2,10 +2,10 @@
 ## *Ab initio* phonon calculation in layered two-diensional materials
 
 ## Introduction
-Two-dimensional materials (2D) are a class of atomically thin materials. The most famous example is graphene, which is a hexagonal lattice. These 2D materials have a wide range of physical properties. For example, hexagonal Boron Nitrice (hBN) is an insulator and is commonly used as a substrate experiment; transitition metal dichalcogenides (TMDCs) such as MoS_2 are semiconductors. 
-These 2D layered materials have become a favorite platform to manipulate their physical properties. Recently, people have been exploring van der Waals (vdW) heterostructures, which refer to the layered assembilies of the 2D materials. They are mediated by long-range vdW interaction, and therefore are also called vdW heterostructures. The flexibility and available experimental control "knobs", such as the material combination, relative twist angle, displacement field, and magnetic field, make them an ideal platform to explore strongly correlated physics. For example, strongly correlated insulator states and unconventional superconductivity were observed in twisted bilayer graphene, whose microscopic origin remains an open question. In this project, we develop a workflow to systematically calculate the phonon of layered heterostructures, specifically multi-layered TMDCs. This serves as the first step to investigate the role that phonon plays in the correlated states. 
+Two-dimensional materials (2D) are a class of atomically thin materials. The most famous example is graphene, which is a hexagonal lattice. These 2D materials have a wide range of physical properties. For example, hexagonal Boron Nitrice (hBN) is an insulator and is commonly used as a substrate experiment; transitition metal dichalcogenides (TMDCs) such as MoS2 are semiconductors. 
+These 2D layered materials have become a favorite platform to manipulate their physical properties. Recently, people have been exploring van der Waals (vdW) heterostructures, which refer to the layered assembilies of the 2D materials. They are mediated by long-range vdW interaction, and therefore are also called vdW heterostructures. The flexibility and available experimental control "knobs", such as the material combination, relative twist angle, displacement field, and magnetic field, make them an ideal platform to explore strongly correlated physics. For example, strongly correlated insulator states and unconventional superconductivity were observed in twisted bilayer graphene [[1]](#1)[[2]](#2), whose microscopic origin remains an open question. In this project, we develop a workflow to systematically calculate the phonon of layered heterostructures, specifically multi-layered TMDCs. This serves as the first step to investigate the role that phonon plays in the correlated states. 
 
-<img src="https://cdn.britannica.com/45/7445-050-CA28EA33/version-periodic-table-elements.jpg" width="800">
+<img src="https://upload.wikimedia.org/wikipedia/commons/9/9b/1D_normal_modes_%28280_kB%29.gif" width="250"> [Image source: Wikipedia]
 
 TMDC is a type of 2D materials, whose unit cell is consisted of 1 transition metal (group 4 - group 12 in the periodic table) and 2 chalcogen atoms (S, Se, Te). The chalcogen atoms and the transition metal are not on the same vertical plane. It is a semiconductor with physical properties that are drastically different than graphene. Like graphene, it is a hexagonal lattice, but its inversion symmetry is broken. Below is a top view and side view of monolayer WTe2. 
 
@@ -22,16 +22,23 @@ Similarly, here is a visualization of how phonon mode propages through a 2D soli
 <img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/geom/400px-Lattice_wave.svg.png" width="250">
 [Imgage source: Wikipedia] 
 
-Our calculations are based on Density Functional Theory (DFT), which is first-principles quantum mechanical model that computes electronic properties by solving the Scrhodinger's equation. Instead of using the full many-body wave function as the basis, it uses the electron density as the basis. According to Kohn-Sham theory, there is an one-to-one correspondence between the many-body wavefunction to electron density. This turns the many-body Schrodinger's equation to a so-called "Kohn-Sham Hamiltonian" that only involves electron density. The "Kohn-Sham Hamiltonian" is exact, with unknown exchange-correlation functionals. In DFT calculations, one needs to choose the exchange-correlation functional depending on the system of interest. 
+Our calculations are based on Density Functional Theory (DFT), which is first-principles quantum mechanical model that computes electronic properties by solving the Scrhodinger's equation. Instead of using the full many-body wave function as the basis, it uses the electron density as the basis. According to Kohn-Sham theory, there is an one-to-one correspondence between the many-body wavefunction to electron density. This turns the many-body Schrodinger's equation to a so-called "Kohn-Sham Hamiltonian" that only involves electron density. The "Kohn-Sham Hamiltonian" is exact, with unknown exchange-correlation functionals. In our project, we use a commercial DFT Vienna Ab initio Simulation Package (VASP) [[3]](#3).
 
-Since the layered-materials involve vdW interactions, which is long-ranged and non-local by nature, we need to choose vdW functionals. Here, we use `SCAN+rVV10` functional, which is both accurate and computationally efficient. https://journals.aps.org/prx/abstract/10.1103/PhysRevX.6.041005 
+In DFT calculations, one needs to choose the exchange-correlation functional depending on the system of interest. Since the layered-materials involve vdW interactions, which is long-ranged and non-local by nature, we need to choose vdW functionals. Here, we use `SCAN+rVV10` functional, which is both accurate and computationally efficient [[4]](#4). 
 
-For the phonon spectrum, we use the Python packge `phonopy`, which uses the force field computed from DFT and use finite difference to calculate the phonon properties. 
+For the phonon spectrum, we use the Python packge `phonopy`, which uses the force field computed from DFT and use finite difference to calculate the phonon properties [[5]](#5). 
 
 Our projects involve both big compute and big data, combining both high-throughput and high-performance computing. For each DFT calculation, we are using distributed memory parallelism through MPI, and using thread-level parallelism by running multiple DFT calculations concurrently. Finally, we use Spark Dataframe to analyze the data.
 
 ## Software Installation and Test Case 
 The guide assumes you are on using Harvard Cannon. 
+
+
+#### Before you start 
+- Make a conda environment with `conda-env.yml`.
+- Edit `params.config` to change the conda environment name 
+- Make sure `vasp.std` is in this folder
+- Confirm that Python package `pymatgen` is installed in the active environment.
 
 #### Steps to run, assuming you are setup on Cannon and have read/write access to `/n/holyscratch/cs205/group4`:
 1. Set up a conda environment, which must minimally contain:
@@ -56,7 +63,11 @@ Note: modify `name` to change the conda environment name and chance the director
 mkdir vasp_relax_test 
 mkdir vasp_relax 
 ```
-Run the first portion of the pipeline (multilayer creation and relaxation) by doing: `sbatch zscan.batch`. The final outputs will be written to `/n/holyscratch01/cs205/group4/example-relax/`
+Run the first portion of the pipeline (multilayer creation and relaxation) by doing: 
+```bash 
+sbatch zscan.batch
+```
+This will create 15 VASP calculations in folder `/vasp_relax_test`, and extract the data from this folder, create a final VASP calculation based on the optimal interlayer spacing in folder `/vasp_relax`, and generate output for phonon calculations. The final outputs will be written to `/n/holyscratch01/cs205/group4/example-relax/`
 
 3. Run the second porition of the pipeline (phonopy and force field calculation) by doing: `sbatch preprocess.batch`. The final outputs will be written to `/n/holyscratch01/cs205/group4/example-ff/`.
 
@@ -68,7 +79,7 @@ Run the first portion of the pipeline (multilayer creation and relaxation) by do
 The output of this example will be the filename and the band gap of the material.
 
 
-## Workflow
+## General Workflow
 
 1. Curate a list of TMDC (**T**ransition **M**etal **D**ichal**C**ogenide) of interest
 
@@ -116,14 +127,30 @@ def generate_unitcell_POSCAR(formula, lattice_constant, template_POSCAR_file):
 
    Parse band gap results from step 6 and perform speed-up assessment on the Spark script.
   
-## Breakdown ofsteps
+## Breakdown of Workflow
+
+0. Create different config files using the MultilayerSet class in `multilayer_config_generator.py`, which save the data that contains the given metal, chalcogen, with the given ali
+3b. Use the RelaxedBilayerMultilayerSet class to collect optimal vertical separations and alignments from the initial VASP calculation output files and obtain more precisely relaxed trilayers.
+4. Perform a relaxation calculation at the optimal interlayer spearation. Copy the geometry to `/phonopy_inputs/' folder 
+5. Copy the relaxed structure to `POSCAR-unit`, rewrite `INCAR-ff` for the force field calculation (same setting except for letting `NSW=1` for no ionic relaxation)
+6. Generate phonopy supercells based on `POSCAR-unit` (number of supercells depends on symmetry/space group of structure).
+7. Run a VASP force field calculation on each supercell.
+8. Process the results using phonopy to generate `.hdf5` files containing band structure information.
+
+
 ### List of 2D material
 
 We curated the input data by first querying the Material Project database for lattice dimension data (POSCAR files) containing only the elements of interest, and then filter them by a list of known 2D materials downloaded from the Material Cloud website.
 
 source: https://www.materialscloud.org/discover/2dstructures/dashboard/list
 
-### Analyzing the output data
+### Relaxation
+In this step, we sample 15 different interlayer spacings between bilayers (aligned/0-deg. or antialigned/180.deg) in order to find the optimal positions between each pair of layers. The outputs generated include: 
+1. the list of optimal interlayer spacing `zoptlist.txt` 
+2. ground state energy vs. interlayer spacing  `zElist.txt` 
+3. Input parameters for phonopy calculations in folder `/phonopy_inputs`
+
+### Analyzing the output data from relaxation
 
 To parse the output files and plot the results from `zElist.txt` and `zoptlist.txt`, run
 
@@ -142,6 +169,15 @@ This particular script groups the materials by chalcogens. We use Spark to organ
 which save the data that contains the given metal, chalcogen, with the given alignment (0 degree or 180 degrees), and <<np>> is the      number of cores to use. For example,  
 
 `<<spark-directory-on-Cannon>>//spark-2.2.0-bin-hadoop2.7/bin/spark-submit select_zEdata.py Mo S 0 4`
+
+### Phonopy and VASP force field calculations
+
+Given a set of relaxed multilayer structures, as created in the first step (which ends with `cleanup.batch`/`cleanup.py`), to run the phonopy and VASP force field calculations do:
+1. Ensure that the directory containing the results from the first step is on the Cannon $SCRATCH directory (e.g. on `/n/holyscratch01/cs205/group4/<directory>`. This ensures that you don't fill up your home directory with large files.
+2. Edit line 7 of `preprocess.py` to ensure that this script is reading the data from the correct directory. If desired, edit line 10 to change the force field directory (if you do, you must also change line 10 and line 7 in `forces_vasp.py` and `postprocess.py`, respectively). 
+3. If desired, change `NPAR` in `preprocess.py` to run with different numbers of cores. If so, change `-n` in `bat1_vasp` to be `NPAR`^2. 
+
+To run the entire workflow for this section, do: `sbatch preprocess.batch`. The results (in `.hdf5` format) will be written to the `$OUTPUTFILE_PATH` directory specified in `params.conf`.
 
 
 ## Code Descriptions
@@ -253,6 +289,23 @@ This same phenomena can be observed when using Spark to obtain band gap data fro
 <img src="https://github.com/hywu0110/cs205_spring2020/blob/develop/results/Image from iOS.jpg" width="600">
 
 ## References 
+
+## References 
+<a id="1">[1]</a> 
+Cao, Yuan, et al. "Unconventional superconductivity in magic-angle graphene superlattices." Nature 556.7699 (2018): 43-50.
+
+<a id="1">[2]</a> 
+Cao, Yuan, et al. "Correlated insulator behaviour at half-filling in magic-angle graphene superlattices." Nature 556.7699 (2018): 80.
+
+<a id="1">[3]</a> 
 VASP: https://www.vasp.at/
+
+<a id="1">[4]</a> 
+Peng, Haowei, et al. "Versatile van der Waals density functional based on a meta-generalized gradient approximation." Physical Review X 6.4 (2016): 041005.
+<a id="1">[5]</a> 
+Atsushi Togo and Isao Tanaka, "First principles phonon calculations in materials science", Scr. Mater., 108, 1-5 (2015)
+https://phonopy.github.io/phonopy/index.html
+<a id="1">[6]</a> 
+Zhang, Xin, et al. "Phonon and Raman scattering of two-dimensional transition metal dichalcogenides from monolayer, multilayer to bulk material." Chemical Society Reviews 44.9 (2015): 2757-2785.
 
 Phonopy: https://phonopy.github.io/phonopy/index.html

@@ -2,7 +2,11 @@
 #SBATCH --job-name=relax
 #SBATCH -n 1 # Number of cores requested
 #SBATCH -t 8:00:00 # Runtime in minutes
+<<<<<<< HEAD
 #SBATCH -p test,shared  # Partition to submit to
+=======
+#SBATCH -p shared,test # Partition to submit to
+>>>>>>> b41646b4443ec4b833d1d55da9d473badb937533
 #SBATCH --mem-per-cpu=5000 # Memory per cpu in MB (see also--mem)
 #SBATCH -o job_%j.out # Standard out goes to this file
 #SBATCH -e job_%j.err # Standard err goes to this file

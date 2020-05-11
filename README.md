@@ -116,11 +116,29 @@ def generate_unitcell_POSCAR(formula, lattice_constant, template_POSCAR_file):
 
    Parse band gap results from step 6 and perform speed-up assessment on the Spark script.
   
-## List of 2D material
+## Breakdown ofsteps
+### List of 2D material
 
 We curated the input data by first querying the Material Project database for lattice dimension data (POSCAR files) containing only the elements of interest, and then filter them by a list of known 2D materials downloaded from the Material Cloud website.
 
 source: https://www.materialscloud.org/discover/2dstructures/dashboard/list
+
+### Analyzing the output data
+
+To parse the output files and plot the results from `zElist.txt` and `zoptlist.txt`, run
+
+`<<spark-directory-on-Cannon>>//spark-2.2.0-bin-hadoop2.7/bin/spark-submit zEanalysis_spark.py`. This will generates three figures and   save to the `results` folder
+![z_TeTe](https://github.com/hywu0110/cs205_spring2020/blob/develop/results/z_TeTe.png)
+![E0_TeTe](https://github.com/hywu0110/cs205_spring2020/blob/develop/results/E0_TeTe.png)
+![E0_vs_z_TeTe](https://github.com/hywu0110/cs205_spring2020/blob/develop/results/E0_vs_z_TeTe.png)
+
+This particular script groups the materials by chalcogens. We use Spark to organize the data. A speedup test using Spark dataframe is    contained in the folder `/zEanalysis`. To run a speedup test, do  
+
+`<<spark-directory-on-Cannon>>//spark-2.2.0-bin-hadoop2.7/bin/spark-submit select_zEdata.py <<metal>> <<chalcogen>> <<alignment>>        <<np>>`.
+
+which save the data that contains the given metal, chalcogen, with the given alignment (0 degree or 180 degrees), and <<np>> is the      number of cores to use. For example,  
+
+`<<spark-directory-on-Cannon>>//spark-2.2.0-bin-hadoop2.7/bin/spark-submit select_zEdata.py Mo S 0 4`
 
 
 ## Code Descriptions

@@ -22,9 +22,15 @@ Similarly, here is a visualization of how phonon mode propages through a 2D soli
 <img src="https://github.com/hywu0110/cs205_spring2020/blob/master/results/geom/400px-Lattice_wave.svg.png" width="250">
 [Imgage source: Wikipedia] 
 
-Our calculations are based on Density Functional Theory (DFT), which is first-principles quantum mechanical model that computes electronic properties by solving the Scrhodinger's equation. Instead of using the full many-body wave function as the basis, it uses the electron density as the basis. According to Kohn-Sham theory, there is an one-to-one correspondence between the many-body wavefunction to electron density. This turns the many-body Schrodinger's equation to a so-called "Kohn-Sham Hamiltonian" that only involves electron density. The "Kohn-Sham Hamiltonian" is exact, with unknown exchange-correlation functionals. In our project, we use a commercial DFT Vienna Ab initio Simulation Package (VASP) [[3]](#3).
+Our calculations are based on Density Functional Theory (DFT), which is first-principles quantum mechanical model that computes electronic properties by solving the Scrhodinger's equation. Instead of using the full many-body wave function as the basis, it uses the electron density as the basis. According to Kohn-Sham theory, there is an one-to-one correspondence between the many-body wavefunction to electron density. This turns the many-body Schrodinger's equation to a so-called "Kohn-Sham Hamiltonian" that only involves electron density. The "Kohn-Sham Hamiltonian" is exact, with unknown exchange-correlation functionals. In our project, we use a commercial DFT Vienna Ab initio Simulation Package (VASP) [[3]](#3). 
 
 In DFT calculations, one needs to choose the exchange-correlation functional depending on the system of interest. Since the layered-materials involve vdW interactions, which is long-ranged and non-local by nature, we need to choose vdW functionals. Here, we use `SCAN+rVV10` functional, which is both accurate and computationally efficient [[4]](#4). 
+
+VASP takes the following input files: 
+- `POSCAR`: contain information about atomic positions, atomic species, and unit cell
+- `KPOINTS`: the momentum to sample
+- `INCAR`: specifies a variety of options, such as the pseudo-potential and parallelism 
+- `POTCAR`: collection of pseudopotentials of individual elements 
 
 For the phonon spectrum, we use the Python packge `phonopy`, which uses the force field computed from DFT and use finite difference to calculate the phonon properties [[5]](#5). 
 

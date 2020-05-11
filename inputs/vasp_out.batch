@@ -1,0 +1,20 @@
+#!/bin/bash
+#SBATCH --job-name=relax
+#SBATCH -n 1 # Number of cores requested
+#SBATCH -t 8:00:00 # Runtime in minutes
+#SBATCH -p test,shared  # Partition to submit to
+#SBATCH --mem-per-cpu=5000 # Memory per cpu in MB (see also--mem)
+#SBATCH -o relax_final_%j.out # Standard out goes to this file
+#SBATCH -e relax_final_%j.err # Standard err goes to this file
+#SBATCH --account=cs205
+
+module load intel/17.0.4-fasrc01 
+module load impi/2017.2.174-fasrc01
+module load python hdf5
+source params.conf
+source activate $CONDAENV_NAME
+
+module list
+
+python vasp_out.py 0 0
+
